@@ -1,0 +1,39 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.startPage{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  height: 100vh;
+
+}
+.startPage>div{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+height: 65vh;
+}
+
+.startText{
+    width: 68%;
+    text-align: center;
+    font-size: 19px;
+}
+
+.btn{
+text-align: center;
+    padding: 17px 0px;
+    width: 80%;
+    border-radius: 15px;
+background-color: rgba(38, 24, 112, 1);
+color: rgba(243, 243, 243, 1);
+font-size: 19px;
+border: none;
+text-decoration: none;
+
+}

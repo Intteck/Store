@@ -1,0 +1,239 @@
+.mobile-section-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
+
+.mobile-section-header>div{
+    display: flex;
+    align-items: center;
+     gap: 20px;
+         font-weight: 700;
+    font-size: 14px;
+
+}
+
+.seeAllBtn{
+        display: flex;
+    align-items: center;
+    padding: 11px 10px;
+border-radius: 50%;
+border: none;
+background: rgba(38, 24, 112, 1);
+}
+
+.seeAllBtn>img{
+    width: 15px;
+}
+
+
+.mobile-shop-page{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.mobile-categories-card{
+    width: 48%;
+    padding: 5px;
+    font-weight: 700;
+    font-size: 14px;
+    border-radius: 10px;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.164);
+  text-decoration: none; 
+}
+
+.mobile-section-container{
+    width: fit-content;
+    margin: auto;
+    gap: 10px;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.Hero-image{
+    display: none;
+}
+.mobile-categories-card>div{
+    gap: 5px;
+ display: grid;
+    grid-template-columns: auto auto;
+}
+
+.mobile-categories-card>div>img{
+    width: 100%;
+}
+
+.foryou-heading{
+    color: black;
+}
+.foryou-heading::after{
+        content: url("/src/assets/Star Mark.svg");
+        position: relative;
+        top: 0;
+        left: 5px;
+}
+
+.mobile-product-card{
+    display: flex;
+    flex-direction: column;
+        gap: 5px;
+        text-decoration: none;
+        color: black;
+      width: 48%;  
+      height: 250px;
+
+}
+
+.pc{
+    display: none;
+}
+.image-holder{
+    padding: 5px;
+    border-radius: 8px;
+      box-shadow: 0px 5px 6px rgba(0, 0, 0, 0.096);
+      height: 57%;   
+
+}
+.image-holder>img{
+    width:100%;
+    height: 100%;
+        border-radius: 3px;
+}
+
+.product-details{
+display: flex;
+flex-direction: column;
+gap: 8px;
+height: 43%;
+padding-bottom: 20px;
+}
+
+.product-details>span{
+font-size: 12px;
+overflow: hidden;
+text-overflow:clip;
+height: 15px;
+}
+
+
+@media only screen and (min-width: 1024px) {
+.mobile-categories-card{
+    width: 23%;
+    padding: 5px;
+    font-weight: 700;
+    font-size: 18px;
+    border-radius: 10px;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.164);
+  text-decoration: none; 
+  text-align: center;
+}
+.mobile-categories-card>span{
+    display: inline-block;
+    padding: 10px;
+}
+.mobile-product-card{
+    display: flex;
+    flex-direction: column;
+        border-radius: 0px;
+        gap: 10px;
+        text-decoration: none;
+        color: black;
+      width: 21%;  
+      background: rgba(244, 245, 247, 1);
+height: 350px;
+}
+
+
+.image-holder{
+    padding: 0px;
+    border-radius: 8px;
+      box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.096);
+      height: 67%;   
+
+}
+
+.product-details{
+    padding: 0px 15px;
+
+}
+
+
+.mobile-section-header{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+        font-size: 25px;
+        margin: 20px;
+}
+.Hero-image{
+    display: block;
+    position: relative;
+    background-image: url("/src/assets/scandinavian-interior-mockup-wall-decal-background 1.svg");
+background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center; 
+        width: 100%;
+    height: 100vh;
+}
+.update-alert{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    position: absolute;
+    padding: 50px 30px;
+    right: 3%;
+    bottom: 8%;
+    width: 40%;
+    background-color: rgba(236, 242, 255, 1);
+}
+.update-alert>span{
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.update-alert>h1{
+    font-size: 52px;
+    color:  rgba(38, 24, 112, 1);;
+}
+.update-alert>button{
+    width: 35%;
+    padding: 4% 0%;
+    border: none;
+    margin-top: 5%;
+    color: white;
+    font-weight: 700;
+    background-color:rgba(38, 24, 112, 1);
+    font-size: 16px;
+}
+
+
+
+.mobile-section-header>div{
+    display: none;
+    align-items: center;
+     gap: 20px;
+         font-weight: 700;
+
+}
+
+.seeAllBtn{
+   display: flex;
+    align-items: center;
+    padding: 8px 10px;
+border-radius: 0%;
+width: 18%;
+justify-content: center;
+text-decoration: none;
+border: 1px solid;
+color: rgba(38, 24, 112, 1);
+font-weight: 700;
+margin: 25px 0px;
+background: transparent;}
+
+.pc{
+    display: flex;
+}
+}

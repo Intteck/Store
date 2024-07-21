@@ -1,0 +1,121 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.062);
+  padding: 20px 25px;
+  background-color: white;
+  height: 70px;
+  z-index: 1000;
+}
+
+.mobile-nav-icon.active:after{
+  display: flex;
+  margin: auto;
+  background-color: rgba(38, 24, 112, 1);
+  content: "";
+  width: 13px;
+  height: 5px;
+  border-radius: 10px;
+}
+
+.searchBar {
+  display: flex;
+  position: fixed;
+  top: 0;
+  padding-top: 10px;
+  background-color: white;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  width: 100%;
+  height: 60px;
+    z-index: 1000;
+}
+.searchBar > div {
+  width: 68%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+}
+#searchInput {
+  border-radius: 30px;
+  background-color: rgba(0, 0, 0, 0.055);
+  border: none;
+  width: 85%;
+  height: 40px;
+  text-indent: 25px;
+  outline: none;
+}
+
+#searchInput::placeholder {
+  color: rgba(0, 0, 0, 0.349);
+}
+
+#searchInput:focus {
+  color: rgba(38, 24, 112, 1);
+  background-color: rgba(229, 235, 252, 1);
+}
+
+
+.content{
+  padding: 0px 15px;
+margin-bottom: 80px;
+    padding-top: 80px;
+
+}
+.pcview-nav{
+  display: none;
+}
+
+@media only screen and (min-width: 1024px) {
+  .searchBar{
+    display: none;
+  }
+  footer{
+    display: none;
+  }
+  .pcview-nav{
+    position: fixed;
+    width: 100%;
+    background-color: white;
+    display: flex;
+    justify-content: space-between;
+    padding: 2px 8%;
+box-shadow: 0px 5px 8px rgba(0, 0, 0, 0.096); 
+z-index: 1000;
+  }
+  
+  .nav-links{
+        display: flex;
+    justify-content: space-around;
+list-style: none;
+align-items: center;
+width: 30%;
+  }
+    .nav-icons{
+        display: flex;
+    justify-content: space-around;
+    width: 15%;
+    }
+        .nav-icons>img{
+          width: 26px;
+        }
+        .content{
+  padding: 0px 15px;
+margin-bottom: 80px;
+    padding-top: 90px;
+
+        }
+}
