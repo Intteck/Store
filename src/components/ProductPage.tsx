@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import Footer from "./Footer";
+import Nav from "./Nav";
 import "./ProductPage.css"
 
 interface productProps {
@@ -27,17 +29,18 @@ type Categories = {
 const ProductPage = (props: productProps) => {
     const [count,setCount] = useState(0);
   const { data } = props;
-  const [forYouData, categoriesItems, categoriesNames] = data;
+  const [forYouData] = data;
 
   const { id } = useParams();
   console.log(id);
   
-  const [selectedItem] = forYouData.filter((item, index) => {
+  const [selectedItem] = forYouData.filter((item) => {
     return item.id === Number(id);
     
   });
   return (
     <>
+    <Nav />
       <img src={selectedItem.Image} alt="" className="selected-product-img" />
       <div className="productpage-content">
         <div className="selected-product-details">
@@ -115,6 +118,7 @@ const ProductPage = (props: productProps) => {
         <button className="addCart">Add to cart</button>
         <button className="buyNow">Buy now</button>
       </footer>
+      <Footer />
     </>
   );
 };

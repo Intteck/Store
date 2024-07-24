@@ -1,6 +1,8 @@
 import React from "react";
 import "./ShopPage.css";
 import { Link} from "react-router-dom";
+import Nav from "./Nav";
+import Footer from "./Footer";
 interface shopProps {
     data: [
   forYouData: CategoryItem[],
@@ -32,9 +34,10 @@ const [forYouData, categoriesItems, categoriesNames] = data;
 
   return (
     <>
+      <Nav />
       <div className="mobile-shop-page">
         <div className="Hero-image">
-          <div className="update-alert">
+          <div className="update-alert" data-aos="fade-up" data-aos-duration="1000">
             <span>New Arrival</span>
             <h1>
               Discover Our <br></br>New Collection
@@ -46,7 +49,7 @@ const [forYouData, categoriesItems, categoriesNames] = data;
             <button>Buy Now</button>
           </div>
         </div>
-        <section className="content">
+        <section className="content align">
           <div className="mobile-section-header">
             <h3>Categories</h3>
             <div>
@@ -57,11 +60,14 @@ const [forYouData, categoriesItems, categoriesNames] = data;
             </div>
           </div>
           <div className="mobile-section-container">
-            {categoriesNames.map((category) => (
+            {categoriesNames.map((category, index) => (
               <Link
                 to={`/categories/${category}`}
                 key={category}
                 className="mobile-categories-card"
+                data-aos="fade-up"
+                data-aos-duration="1000"
+                data-aos-delay={50 * index}
               >
                 <div>
                   {categoriesItems[category].map((item, index) => (
@@ -92,6 +98,9 @@ const [forYouData, categoriesItems, categoriesNames] = data;
                 key={index}
                 className="mobile-product-card"
                 to={`/Product/${item.id}`}
+                data-aos="fade-up"
+                data-aos-duration="1000"
+                data-aos-delay={100 * index}
               >
                 <div className="image-holder">
                   <img src={item.Image} alt={item.Label} />
@@ -109,6 +118,7 @@ const [forYouData, categoriesItems, categoriesNames] = data;
           </div>
         </section>
       </div>
+      <Footer />
     </>
   );
 };

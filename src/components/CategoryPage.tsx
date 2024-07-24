@@ -1,6 +1,7 @@
 import React from "react";
 import { Link, useParams } from "react-router-dom";
 import "./CategoryPage.css"
+import NavFooter from "./Nav";
 interface shopProps {
   data: [categoriesItems: Categories, categoriesNames: CategoryKey[]];
 }
@@ -32,6 +33,8 @@ const displayImg = [
 ];
  if (category === undefined) {
     return(
+      <>
+      <NavFooter />
       <div className="content">
     <div className="mobile-categorypage-list">
       {categoriesNames.map((item,index)=>(
@@ -43,34 +46,39 @@ const displayImg = [
             </button></div>
       
     </div>
-    </div>)
+    </div>
+    </>)
   }
 
 
   return (
-          <div className="content">
-    <div className="mobile-section-container">
-      {categoriesItems[categoryKey].map(
-        (item: CategoryItem, index: React.Key | null | undefined) => (
-
-              <Link
-                key={index}
-                className="mobile-product-card"
-                to={`/Product/${item.id}`}
-              >
-                <div className="image-holder">
-                  <img src={item.Image} alt={item.Label} />
-                </div>
-                <div className="product-details">
-                  <h4>{item.title}</h4>
-                  <span>{item.Label}</span>
-                  <b>{item.Price}</b>
-                </div>
-              </Link>
-        )
-      )}
-    </div>
-    </div>
+    <>
+      <NavFooter />
+      <div className="content">
+        <div className="all-products-list">
+          <div className="mobile-section-container">
+            {categoriesItems[categoryKey].map(
+              (item: CategoryItem, index: React.Key | null | undefined) => (
+                <Link
+                  key={index}
+                  className="mobile-product-card"
+                  to={`/Product/${item.id}`}
+                >
+                  <div className="image-holder">
+                    <img src={item.Image} alt={item.Label} />
+                  </div>
+                  <div className="product-details">
+                    <h4>{item.title}</h4>
+                    <span>{item.Label}</span>
+                    <b>{item.Price}</b>
+                  </div>
+                </Link>
+              )
+            )}
+          </div>
+        </div>
+      </div>
+    </>
   );
 }; 
 

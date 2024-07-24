@@ -35,6 +35,7 @@ background: rgba(38, 24, 112, 1);
 }
 
 .mobile-categories-card{
+    display: inline-block;
     width: 48%;
     padding: 5px;
     font-weight: 700;
@@ -43,6 +44,12 @@ background: rgba(38, 24, 112, 1);
   box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.164);
   text-decoration: none; 
 }
+.mobile-categories-card:hover{
+    transform: scale(1.1) !important;
+    transition: 0.3s !important;
+}
+
+
 
 .mobile-section-container{
     width: fit-content;
@@ -61,6 +68,7 @@ background: rgba(38, 24, 112, 1);
  display: grid;
     grid-template-columns: auto auto;
 }
+
 
 .mobile-categories-card>div>img{
     width: 100%;
@@ -87,9 +95,12 @@ background: rgba(38, 24, 112, 1);
 
 }
 
-.pc{
-    display: none;
+.mobile-product-card:hover{
+    transform: scale(1.1) !important;
+    transition: 0.3s !important;
+
 }
+
 .image-holder{
     padding: 5px;
     border-radius: 8px;
@@ -146,6 +157,11 @@ height: 15px;
 height: 350px;
 }
 
+.seeAllBtn:hover{
+    background-color: rgba(38, 24, 112, 1);
+    color: white;
+    transition: 0.5s;
+}
 
 .image-holder{
     padding: 0px;
@@ -188,6 +204,7 @@ background-size: cover;
     bottom: 8%;
     width: 40%;
     background-color: rgba(236, 242, 255, 1);
+    height: 460px;
 }
 .update-alert>span{
     font-size: 18px;
@@ -207,6 +224,14 @@ background-size: cover;
     font-weight: 700;
     background-color:rgba(38, 24, 112, 1);
     font-size: 16px;
+}
+
+.update-alert>button:hover{
+transform: scale(1.1);
+transition: 0.5s;
+background-color: transparent;
+border: 1px solid rgba(38, 24, 112, 1);
+color: rgba(38, 24, 112, 1);
 }
 
 
@@ -233,7 +258,14 @@ font-weight: 700;
 margin: 25px 0px;
 background: transparent;}
 
-.pc{
-    display: flex;
+.foryou-heading::after{
+        content: url("/src/assets/Star Mark.svg");
+        position: relative;
+        top: auto;
+        bottom: 5px;
+        left: 5px;
 }
+
+
+
 }
