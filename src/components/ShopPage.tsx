@@ -55,7 +55,7 @@ const [forYouData, categoriesItems, categoriesNames] = data;
             <div>
               <span>See All</span>
               <Link to={"/Search"} className="seeAllBtn">
-                <img src="\src\assets\Arrow.svg" alt="" />
+                <img src="\src\assets\Arrow.png" alt="" />
               </Link>
             </div>
           </div>
@@ -87,7 +87,7 @@ const [forYouData, categoriesItems, categoriesNames] = data;
             <div>
               <span>See All</span>
               <button className="seeAllBtn">
-                <img src="\src\assets\Arrow.svg" alt="" />
+                <img src="\src\assets\Arrow.png" alt="" />
               </button>
             </div>
           </div>

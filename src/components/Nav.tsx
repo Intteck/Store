@@ -11,7 +11,7 @@ const Nav = () => {
             data-aos="fade-down"
             data-aos-duration="1000"
           >
-            <img src="\src\assets\Pretiosus_1.svg" alt="" />
+            <img src="\src\assets\Pretiosus 1.png" alt="" />
             <div>
               <input
                 type="text"
@@ -33,7 +33,7 @@ const Nav = () => {
             data-aos="fade-down"
             data-aos-duration="1000"
           >
-            <img src="\src\assets\Pretiosus_1.svg" alt="" />
+            <img src="\src\assets\Pretiosus 1.png" alt="" />
             <div className="nav-links">
               <li>Home</li>
               <li>Shop</li>
@@ -41,9 +41,12 @@ const Nav = () => {
               <li>Contact</li>
             </div>
             <div className="nav-icons">
-              <img src="\src\assets\mdi_account-alert-outline.svg" alt="" />
-              <img src="\src\assets\Vector (3).svg" alt="" />
-              <img src="\src\assets\Vector (2).svg" alt="" />
+              <img src="\src\assets\mdi_account-alert-outline.png" alt="" />
+              <img src="\src\assets\akar-icons_search.png" alt="" />
+              <img
+                src="\src\assets\ant-design_shopping-cart-outlined.png"
+                alt=""
+              />
             </div>
           </div>
         </>

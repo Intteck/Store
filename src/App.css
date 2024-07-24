@@ -167,6 +167,7 @@
   .nav-icons {
     display: flex;
     justify-content: space-around;
+    align-items: center;
     width: 15%;
   }
   .nav-icons > img {

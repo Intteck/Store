@@ -183,7 +183,7 @@ const Footer = () => {
               <hr />
               <div className="pc-footer">
                 <div className="footer-info">
-                  <img src="\src\assets\Pretiosus 1.svg" alt="" />
+                  <img src="\src\assets\Pretiosus 1.png" alt="" />
                   <span>
                     400 University Drive Suite 200 Coral Gables, <br></br>FL 33134 USA
                   </span>

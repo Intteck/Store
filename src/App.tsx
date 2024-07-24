@@ -33,7 +33,7 @@ function App() {
     {
       id: 3,
       title: "Beautiful Gown",
-      Image: "/src/assets/02643ACC-CFE9-415B-B36C-04316EC68CF0.svg",
+      Image: "/src/assets/02643ACC-CFE9-415B-B36C-04316EC68CF0.png",
       Label:
         "Pink Dress Gown lazury awaits with this beautiful pink dress of size xl.",
       Price: "$" + 17.58,
