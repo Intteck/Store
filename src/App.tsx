@@ -1,14 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import CategoryPage from "./components/CategoryPage";
 import Startpage from "./components/Startpage";
 import ShopPage from "./components/ShopPage";
 import "./App.css";
-import { BrowserRouter as Router, Route, Routes} from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, useLocation} from "react-router-dom";
 import ProductPage from "./components/ProductPage";
+import CartPage from "./components/CartPage";
+import CheckoutPage from "./components/CheckoutPage";
+import Profile from "./components/Profile";
+import Account from "./components/Account";
+import Login from "./components/Login";
+import { ScrollRestoration } from "react-router-dom";
 
 
 type CategoryItem = {
-  id: Number;
+  id: number;
   title:string;
   Image: string;
   Label: string;
@@ -22,6 +28,12 @@ type Categories = {
 };
 
 function App() {
+   const location = useLocation();
+
+   useEffect(() => {
+     window.scrollTo(0, 0);
+   }, [location]);
+
 
   const categoriesNames: CategoryKey[] = [
     "Clothing",
@@ -189,21 +201,53 @@ function App() {
         <div>
           <Routes>
             <Route path="/" element={<Startpage />} />
+            <Route path="/Login" element={<Login />} />
+            <Route path="/Account" element={<Account />} />
+            <Route path="/Profile" element={<Profile />} />
             <Route
               path="/Shop"
-              element={<ShopPage data={[forYouData, categoriesItems, categoriesNames]} />}
+              element={
+                <ShopPage
+                  data={[forYouData, categoriesItems, categoriesNames]}
+                />
+              }
             />
             <Route
               path="/Search"
-              element={<CategoryPage data={[categoriesItems, categoriesNames]} />}
+              element={
+                <CategoryPage data={[categoriesItems, categoriesNames]} />
+              }
             />
             <Route
               path="/Product/:id"
-              element={<ProductPage data={[forYouData,categoriesItems, categoriesNames]} />}
+              element={
+                <ProductPage
+                  data={[forYouData, categoriesItems, categoriesNames]}
+                />
+              }
             />
             <Route
+              path="/Product"
+              element={
+                <ProductPage
+                  data={[forYouData, categoriesItems, categoriesNames]}
+                />
+              }
+            />
+            <Route
+              path="/Cart"
+              element={
+                <CartPage
+                  data={[forYouData, categoriesItems, categoriesNames]}
+                />
+              }
+            />
+            <Route path="/Checkout" element={<CheckoutPage />} />
+            <Route
               path="/categories/:category"
-              element={<CategoryPage data={[categoriesItems, categoriesNames]} />}
+              element={
+                <CategoryPage data={[categoriesItems, categoriesNames]} />
+              }
             />
           </Routes>
         </div>

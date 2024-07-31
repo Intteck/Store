@@ -91,7 +91,6 @@ background: rgba(38, 24, 112, 1);
         text-decoration: none;
         color: black;
       width: 48%;  
-      height: 250px;
 
 }
 
@@ -215,7 +214,7 @@ background-size: cover;
     font-size: 52px;
     color:  rgba(38, 24, 112, 1);;
 }
-.update-alert>button{
+.update-alert>a>button{
     width: 35%;
     padding: 4% 0%;
     border: none;
@@ -226,7 +225,7 @@ background-size: cover;
     font-size: 16px;
 }
 
-.update-alert>button:hover{
+.update-alert>a>button:hover{
 transform: scale(1.1);
 transition: 0.5s;
 background-color: transparent;

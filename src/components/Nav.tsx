@@ -1,17 +1,18 @@
 import React from "react";
+import { Link } from "react-router-dom";
 const Nav = () => {
   return (
     <>
-      {!(
-        location.pathname === "/" || location.pathname.startsWith("/Product")
-      ) && (
+      {!(location.pathname === "/") && (
         <>
           <div
             className="searchBar mobile"
             data-aos="fade-down"
             data-aos-duration="1000"
           >
-            <img src="\src\assets\Pretiosus 1.png" alt="" />
+            <Link to={"/Shop"}>
+              <img src="\src\assets\Pretiosus 1.png" alt="" />
+            </Link>
             <div>
               <input
                 type="text"
@@ -33,20 +34,26 @@ const Nav = () => {
             data-aos="fade-down"
             data-aos-duration="1000"
           >
-            <img src="\src\assets\Pretiosus 1.png" alt="" />
+            <Link to={"/Shop"}>
+              <img src="\src\assets\Pretiosus 1.png" alt="" />
+            </Link>
             <div className="nav-links">
-              <li>Home</li>
-              <li>Shop</li>
+              <Link to={"/Shop"}>Home</Link>
+              <Link to={"/Product"}>Shop</Link>
               <li>About</li>
               <li>Contact</li>
             </div>
             <div className="nav-icons">
-              <img src="\src\assets\mdi_account-alert-outline.png" alt="" />
-              <img src="\src\assets\akar-icons_search.png" alt="" />
-              <img
-                src="\src\assets\ant-design_shopping-cart-outlined.png"
-                alt=""
-              />
+              <Link to= {"/Account"}><img src="\src\assets\mdi_account-alert-outline.png" alt="" /></Link>
+              <Link to={"/Search"}>
+                <img src="\src\assets\akar_icons_search.png" alt="" />
+              </Link>
+              <Link to={"/Cart"}>
+                <img
+                  src="\src\assets\ant_design_shopping_cart_outlined.png"
+                  alt=""
+                />
+              </Link>
             </div>
           </div>
         </>

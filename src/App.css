@@ -41,7 +41,7 @@
   height: 60px;
   z-index: 1000;
 }
-.searchBar >img {
+.searchBar >a>img {
   width: 76px;
 }
 
@@ -61,6 +61,16 @@
   height: 40px;
   text-indent: 25px;
   outline: none;
+}
+
+.Arrow{
+  transform:rotateZ(180deg);
+  transition: 0.5s ease;
+}
+
+.Arrow.active{
+    transform:rotateX(0deg);
+
 }
 
 #searchInput::placeholder {
@@ -163,6 +173,11 @@
     list-style: none;
     align-items: center;
     width: 30%;
+  }
+
+  .nav-links>a{
+text-decoration: none;
+color: black;
   }
   .nav-icons {
     display: flex;

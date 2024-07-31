@@ -1,13 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import "./CategoryPage.css"
-import NavFooter from "./Nav";
+import Nav from "./Nav";
+import Footer from "./Footer";
 interface shopProps {
   data: [categoriesItems: Categories, categoriesNames: CategoryKey[]];
 }
 
 type CategoryItem = {
-  id: Number;
+  id: number;
   title:string;
   Image: string;
   Label: string;
@@ -22,6 +23,7 @@ type Categories = {
 
 const CategoryPage = (props: shopProps) => {
   const { data } = props;
+  const [arrow, setArrowActive] = useState(false);
   const [categoriesItems, categoriesNames] = data;
   const { category } = useParams();
   const categoryKey = category as CategoryKey;
@@ -32,28 +34,52 @@ const displayImg = [
   categoriesItems.Cars[0].Image,
 ];
  if (category === undefined) {
-    return(
+    return (
       <>
-      <NavFooter />
-      <div className="content">
-    <div className="mobile-categorypage-list">
-      {categoriesNames.map((item,index)=>(
-         <Link to={`/categories/${item}`} className="mobile-categorypage-item"><div><img src={displayImg[index]} alt="" /> {item}</div> <img src="src\assets\Icon Arrow.png" alt="" /></Link>
-      ))}
-       <div className="mobile-categorypage-item"><div><img src="/src/assets/45D808E0-5E00-4D2A-9BDC-5ED6F427010E.png" alt="" /><h3 className="foryou-heading">Just For You</h3>
-</div>   <button className="seeAllBtn">
-              <img src="\src\assets\Arrow.svg" alt="" />
-            </button></div>
-      
-    </div>
-    </div>
-    </>)
+        <Nav />
+        <div className="content">
+          <div className="mobile-categorypage-list">
+            {categoriesNames.map((item, index) => (
+              <Link
+                to={`/categories/${item}`}
+                className="mobile-categorypage-item"
+              >
+                <div>
+                  <img src={displayImg[index]} alt="" /> {item}
+                </div>{" "}
+                <img
+                  src="src/assets/Icon Arrow.png"
+                  alt="arrow"
+                  className={arrow ? "Arrow" : "Arrow active"}
+                  onClick={() => {
+                    setArrowActive(!arrow);
+                  }}
+                />{" "}
+              </Link>
+            ))}
+            <div className="mobile-categorypage-item">
+              <div>
+                <img
+                  src="/src/assets/45D808E0-5E00-4D2A-9BDC-5ED6F427010E.png"
+                  alt=""
+                />
+                <h3 className="foryou-heading">Just For You</h3>
+              </div>{" "}
+            <Link to={"/Product"} className="seeAllBtn mobile">
+                <img src="\src\assets\Arrow.png" alt="" />
+              </Link>
+            </div>
+          </div>
+        </div>
+        <Footer />
+      </>
+    );
   }
 
 
   return (
     <>
-      <NavFooter />
+      <Nav />
       <div className="content">
         <div className="all-products-list">
           <div className="mobile-section-container">
@@ -78,6 +104,7 @@ const displayImg = [
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 }; 

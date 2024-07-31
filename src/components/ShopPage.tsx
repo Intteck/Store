@@ -12,7 +12,7 @@ interface shopProps {
 };
 
 type CategoryItem = {
-  id: Number;
+  id: number;
   title:string;
   Image: string;
   Label: string;
@@ -37,16 +37,19 @@ const [forYouData, categoriesItems, categoriesNames] = data;
       <Nav />
       <div className="mobile-shop-page">
         <div className="Hero-image">
-          <div className="update-alert" data-aos="fade-up" data-aos-duration="1000">
+          <div
+            className="update-alert"
+            data-aos="fade-up"
+            data-aos-duration="1000"
+          >
             <span>New Arrival</span>
             <h1>
               Discover Our <br></br>New Collection
             </h1>
             <span>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit
-              tellus, luctus nec ullamcorper mattis.
+              Get the best deals on your favourite products!!!
             </span>
-            <button>Buy Now</button>
+            <Link to={'/Product'}><button>Buy Now</button></Link>
           </div>
         </div>
         <section className="content align">
@@ -60,7 +63,7 @@ const [forYouData, categoriesItems, categoriesNames] = data;
             </div>
           </div>
           <div className="mobile-section-container">
-            {categoriesNames.map((category, index) => (
+            {categoriesNames.slice(0, 4).map((category, index) => (
               <Link
                 to={`/categories/${category}`}
                 key={category}
@@ -70,7 +73,7 @@ const [forYouData, categoriesItems, categoriesNames] = data;
                 data-aos-delay={50 * index}
               >
                 <div>
-                  {categoriesItems[category].map((item, index) => (
+                  {categoriesItems[category].slice(0, 4).map((item, index) => (
                     <img key={index} src={item.Image} alt={item.Label} />
                   ))}
                 </div>
@@ -86,14 +89,14 @@ const [forYouData, categoriesItems, categoriesNames] = data;
             <h3 className="foryou-heading">Just For You</h3>
             <div>
               <span>See All</span>
-              <button className="seeAllBtn">
+              <Link to={"/Product"} className="seeAllBtn">
                 <img src="\src\assets\Arrow.png" alt="" />
-              </button>
+              </Link>
             </div>
           </div>
 
           <div className="mobile-section-container">
-            {forYouData.map((item, index) => (
+            {forYouData.slice(0, 4).map((item, index) => (
               <Link
                 key={index}
                 className="mobile-product-card"
@@ -112,7 +115,7 @@ const [forYouData, categoriesItems, categoriesNames] = data;
                 </div>
               </Link>
             ))}
-            <Link to={"/Search"} className="seeAllBtn pc">
+            <Link to={"/Product"} className="seeAllBtn pc">
               Show More
             </Link>
           </div>
