@@ -1,0 +1,56 @@
+.Text5 {
+    color: #202020;
+
+    font-family: "Raleway", sans-serif;
+    font-size: 200%;
+font-style: normal;
+font-weight: 700;
+line-height:  128.571% ;
+letter-spacing: -0.28px;
+}
+
+.profileContainer{
+    margin-top: 20%;
+    padding-top: 2%;
+    border-radius: 10px;
+    background: #F8F8F8;
+width: 100%;
+height: 70px;
+text-align: center;
+}
+.text6{
+    color: #202020;
+ padding-top: 1.5%;
+    font-family: "Raleway", sans-serif;
+font-size: 150%;
+font-style: normal;
+font-weight: 700;
+line-height: 28.571% ;
+letter-spacing: -0.14px;
+}
+.Text7 {
+    color: #000;
+    padding-top: 1%;
+
+    font-family: "Nunito Sans", sans-serif;
+font-size: 70%;
+font-style: normal;
+font-weight: 400;
+line-height: 15px; /* 150% */
+}
+.Text8 {
+    font-family: "Nunito Sans", sans-serif;
+
+    text-align: center;
+    padding-top: 10%;
+    padding-bottom: 5%;
+}
+#doneHistory {
+    display: flex;
+    justify-content: center;
+    margin: auto;
+    padding: 3% 10%;    
+    flex-shrink: 0;
+    border-radius: 16px;
+background: #261870;
+}

@@ -7,9 +7,11 @@ const Startpage = () => {
       <>
         <div className="startPage">
           <div>
-            <img src="src\assets\IMG-20240516-WA0011 1.svg" alt="" />
-            <p className="startText">Beautiful eCommerce UI Kit for your online store</p>
-            <Link to={"/Shop"} className="btn">Let's get started</Link>
+            <img src="src\assets\Pretiosus 1.png" alt="" />
+            <p className="startText">SuperCharge your online shopping </p>
+            <Link to={"/Home"} className="btn">
+              Let's get started
+            </Link>
           </div>
         </div>
       </>

@@ -1,0 +1,328 @@
+.mobile-section-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
+
+.mobile-section-header>div{
+    display: flex;
+    align-items: center;
+     gap: 20px;
+         font-weight: 700;
+    font-size: 14px;
+
+}
+
+.seeAllBtn{
+        display: flex;
+    align-items: center;
+    padding: 11px 10px;
+border-radius: 50%;
+border: none;
+background: rgba(38, 24, 112, 1);
+}
+
+.seeAllBtn>img{
+    width: 15px;
+}
+
+
+.mobile-shop-page{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.mobile-categories-card{
+    display: inline-block;
+    width: 48%;
+    padding: 5px;
+    font-weight: 700;
+    font-size: 14px;
+    border-radius: 10px;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.164);
+  text-decoration: none; 
+      max-width: 289px;
+}
+.mobile-categories-card:hover{
+    transform: scale(1.1) !important;
+    transition: 0.3s !important;
+}
+
+
+
+.mobile-section-container{
+    width: 95%;
+    margin: auto;
+    gap: 10px;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.mobile-categories-card>div{
+    gap: 5px;   
+ display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: 50% 50%;
+    height: 82%;
+    }
+
+
+.mobile-categories-card>div>img{
+    width: 95%;
+    height: 100%;
+    border: 1px solid rgba(128, 128, 128, 0.493);
+    border-radius: 10px;
+    padding: 1%;
+}
+
+.foryou-heading{
+    color: black;
+}
+.foryou-heading::after{
+        content: url("/src/assets/Star Mark.svg");
+        position: relative;
+        top: 0;
+        left: 5px;
+}
+
+.mobile-product-card{
+    display: flex;
+    flex-direction: column;
+        gap: 5px;
+        text-decoration: none;
+        color: black;
+      width: 48%;  
+
+}
+
+.mobile-product-card:hover{
+    transform: scale(1.1) !important;
+    transition: 0.3s !important;
+
+}
+
+.image-holder{
+    padding: 5px;
+    border-radius: 8px;
+      box-shadow: 0px 5px 6px rgba(0, 0, 0, 0.096);
+      height: 57%;   
+
+}
+
+.mobile-categories-card>span{
+    display: inline-block;
+    padding: 10px 0px;
+}
+
+.image-holder>img{
+    width:100%;
+    height: 100%;
+        border-radius: 3px;
+}
+
+.product-details{
+display: flex;
+flex-direction: column;
+gap: 8px;
+height: 43%;
+padding-bottom: 20px;
+}
+
+.product-details>span{
+font-size: 12px;
+height: 15px;
+}
+
+.swiper-container{
+          position: relative;
+    height: calc(50/100 *100vw);
+
+}
+
+.swiper {
+    position: static !important;
+        border-radius: 12px;
+        overflow: hidden;
+            height: 87%;
+
+
+}
+
+.swiper-pagination {
+  position: absolute !important;
+  bottom: 0 !important; /* Adjust this value to move the pagination dots further down */
+}
+
+.swiper-pagination-bullet{
+background-color: rgba(38, 24, 112, 1) !important;  
+}
+
+.swiper-pagination-bullet-active{
+width: 40px !important;
+border-radius: 7px !important;
+}
+
+
+.swiper-slide>img{
+width: 100%;
+height: 100%;
+}
+
+
+@media only screen and (min-width: 1023px) {
+    .swiper-container{
+          display: none;
+
+    }
+
+
+.mobile-categories-card{
+    width: 23%;
+    padding: 5px;
+    font-weight: 700;
+    font-size: 18px;
+    border-radius: 10px;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.164);
+  text-decoration: none; 
+  text-align: center;
+        max-width: 300px;
+
+}
+.mobile-categories-card>div{
+    height: 87%;
+}
+.mobile-categories-card>span{
+    display: inline-block;
+    padding: 10px;
+}
+.mobile-product-card{
+    display: flex;
+    flex-direction: column;
+        border-radius: 0px;
+        text-decoration: none;
+        color: black;
+    width: 23%;
+      background: rgba(244, 245, 247, 1);
+height: 350px;
+        max-width: 300px;
+        margin-bottom: 25px;
+
+}
+
+.seeAllBtn:hover{
+    background-color: rgba(38, 24, 112, 1);
+    color: white;
+    transition: 0.5s;
+}
+
+.image-holder{
+    padding: 0px;
+    border-radius: 8px;
+      box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.096);
+      height: 70%;   
+      width: 100%;
+    }
+.product-details{
+    padding: 0px 15px;
+    height: 30%;
+
+}
+
+
+.mobile-section-header{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+        font-size: 25px;
+        margin: 20px;
+}
+.Hero-image{
+    display: block;
+    position: relative;
+    background-image: url("/src/assets/scandinavian-interior-mockup-wall-decal-background 1.svg");
+background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center; 
+        width: 100%;
+    height: 100vh;
+}
+.update-alert{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    position: absolute;
+    padding: 50px 30px;
+    right: 3%;
+    bottom: 8%;
+    width: 40%;
+    background-color: rgba(236, 242, 255, 1);
+    height: 460px;
+}
+.update-alert>span{
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.update-alert>h1{
+    font-size: 52px;
+    color:  rgba(38, 24, 112, 1);;
+}
+.update-alert>a>button{
+    width: 35%;
+    padding: 4% 0%;
+    border: none;
+    margin-top: 5%;
+    color: white;
+    font-weight: 700;
+    background-color:rgba(38, 24, 112, 1);
+    font-size: 16px;
+}
+
+.update-alert>a>button:hover{
+transform: scale(1.1);
+transition: 0.5s;
+background-color: transparent;
+border: 1px solid rgba(38, 24, 112, 1);
+color: rgba(38, 24, 112, 1);
+}
+
+
+
+.mobile-section-header>div{
+    display: none;
+    align-items: center;
+     gap: 20px;
+         font-weight: 700;
+
+}
+
+.seeAllBtn{
+   display: flex;
+    align-items: center;
+    padding: 8px 10px;
+border-radius: 0%;
+width: 18%;
+justify-content: center;
+text-decoration: none;
+border: 1px solid;
+color: rgba(38, 24, 112, 1);
+font-weight: 700;
+margin: 25px 0px;
+background: transparent;}
+
+.foryou-heading::after{
+        content: url("/src/assets/Star Mark.svg");
+        position: relative;
+        top: auto;
+        bottom: 5px;
+        left: 5px;
+}
+.mobile-section-container{
+    width: 85%;
+}
+
+
+}
