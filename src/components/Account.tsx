@@ -55,7 +55,7 @@ console.log("Submitting details:", JSON.stringify(Details));  // Check that all 
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringifDetails),
+      body: JSON.stringify(Details),
     })
       .then((response) => {
         if (!response.ok) {
