@@ -17,8 +17,9 @@ align-items: center;
 
 }
 .cart-item-icon{
-width: 80%;
+    width: 80%;
 border-radius: 8px;
+height: calc(6/100 * 100vw);
 }
 
 .delete-icon{
@@ -290,4 +291,10 @@ cursor: pointer;
 padding-bottom: 40px;
 
 }
+.cart-item-icon{
+    width: 80%;
+border-radius: 8px;
+height: calc(10/100 * 100vw)
+}
+
 }

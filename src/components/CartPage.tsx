@@ -3,6 +3,7 @@ import Nav from "./Nav";
 import "./CartPage.css";
 import { Link } from "react-router-dom";
 import Footer from "./Footer";
+import { isNumberObject } from "util/types";
 interface cartProps {
   data: [Products: ProductItem[] | null, isPending: boolean];
 }
@@ -26,12 +27,13 @@ type productType = {
 
 const CartPage = (props:cartProps) => {
   const { data } = props;
-const [Products,isPending] = data;
+    const [Products,isPending] = data;
+const formatter = new Intl.NumberFormat("en-US");
 
   const cart = [
-    { id: 1, count: 3 },
-    { id: 4, count: 3 },
-    { id: 5, count: 3 },
+    { id: 508, count: 3 },
+    { id: 410, count: 3 },
+    { id: 81, count: 3 },
   ];
 
   const [installno, setInstallno] = useState(1);
@@ -43,41 +45,49 @@ const [installmentInfo, setInstallmentInfo] = useState(false);
     <>
       <Nav />
       <div className="content">
-                  <div className="mobile-section-container">
-        {isPending && (
-          <div className="Loader" id="Loader">
-            <span className="dot"></span>
-            <span className="dot"></span>
-            <span className="dot"></span>
-          </div>
-        )}
-                  </div>
+        <div className="mobile-section-container">
+          {isPending && (
+            <div className="Loader" id="Loader">
+              <span className="dot"></span>
+              <span className="dot"></span>
+              <span className="dot"></span>
+            </div>
+          )}
+        </div>
 
-        {Products && <div className="cartPage-container">
-          <div className="cart-details">
-            <span className="cart-details-header">.</span>
-            <span className="cart-details-header">Product</span>
-            <span className="cart-details-header">Price</span>
-            <span className="cart-details-header col4">Quantity</span>
-            <span className="cart-details-header">Subtotal</span>
-            <span className="cart-details-header">.</span>
-            {Products!
+        {Products && (
+          <div className="cartPage-container">
+            <div className="cart-details">
+              <span className="cart-details-header">&nbsp;</span>
+              <span className="cart-details-header">Product</span>
+              <span className="cart-details-header">Price</span>
+              <span className="cart-details-header col4">Quantity</span>
+              <span className="cart-details-header">Subtotal</span>
+              <span className="cart-details-header">&nbsp;</span>
+              {Products!
                 .filter((item) => {
                   return cart.some((obj) => obj.id === item.id);
                 })
                 .map((item) => (
                   <>
                     <img
-                      src={"http://pretiosusadmin.gibsonline.com/Product_Images/"+item.image_URL}
+                      src={
+                        "http://pretiosusadmin.gibsonline.com/Product_Images/" +
+                        item.image_URL
+                      }
                       className="cart-item-icon"
                       alt=""
                     />
                     <span>{item.description}</span>
-                    <span>&#8358;{item.price}</span>
+                    <span>&#8358;{ formatter.format(Number(item.price))}</span>
                     <span className="col4">
                       {cart.find((tem) => tem.id === item.id)?.count}
                     </span>
-                    <span>&#8358;{cart.find((tem) => tem.id === item.id)?.count!*item.price}</span>
+                    <span>
+                      &#8358;
+                      { formatter.format(Number(cart.find((tem) => tem.id === item.id)?.count! *
+                        item.price))}
+                    </span>
                     <img
                       src="\src\assets\Vector.png"
                       alt=""
@@ -85,37 +95,49 @@ const [installmentInfo, setInstallmentInfo] = useState(false);
                     />
                   </>
                 ))}
-          </div>
-          <div className="cart-totals-container">
-            <h2>Cart Totals</h2>
-            <div>
-              <div className="cart-subtotal">
-                <span>Subtotal</span>
-                <span>Rs.250,000.00</span>
+            </div>
+            <div className="cart-totals-container">
+              <h2>Cart Totals</h2>
+              <div>
+                {Products!
+                  .filter((item) => {
+                    return cart.some((obj) => obj.id === item.id);
+                  })
+                  .map((item) => (
+                    <div className="cart-subtotal">
+                      <span>Subtotal</span>
+                      <span>
+                        &#8358;
+                        { formatter.format(Number(cart.find((tem) => tem.id === item.id)?.count! *
+                          item.price))}
+                      </span>
+                    </div>
+                  ))}
+
+                    <div className="cart-subtotal">
+                      <span>Total</span>
+                      <span className="cart-total">                       
+                        &#8358;
+{formatter.format(Number(Products!.filter((item) => { return cart.some((obj) => obj.id === item.id);}).reduce((sum,item) => sum+cart.find((tem) => tem.id === item.id)?.count! *
+                          item.price,0)))}</span>
+                 </div>
+               
               </div>
-              <div className="cart-subtotal">
-                <span>Shipping</span>
-                <span>Rs.250,000.00</span>
-              </div>
-              <div className="cart-subtotal">
-                <span>Subtotal</span>
-                <span className="cart-total">Rs.250,000.00</span>
+              <div className="cart-total-buttons">
+                <button
+                  onClick={() => {
+                    setInstallmentInfo(!installmentInfo);
+                  }}
+                >
+                  Installment
+                </button>
+                <Link to={"/Checkout"}>
+                  <button>Check Out</button>
+                </Link>
               </div>
             </div>
-            <div className="cart-total-buttons">
-              <button
-                onClick={() => {
-                  setInstallmentInfo(!installmentInfo);
-                }}
-              >
-                Installment
-              </button>
-              <Link to={"/Checkout"}>
-                <button>Check Out</button>
-              </Link>
-            </div>
           </div>
-        </div>}
+        )}
         {installmentInfo && (
           <>
             <div

@@ -160,9 +160,8 @@
     flex-direction: column;
     gap: 30px;
   }
-  .footer-info > img {
+  .footer-info >a> img {
     height: 86px;
-    width: 148px;
   }
 
   .footer-links > h5 {
