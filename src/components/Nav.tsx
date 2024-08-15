@@ -1,6 +1,15 @@
-import React from "react";
+import Cookies from "js-cookie";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 const Nav = () => {
+  const [cartNo, setCartNo] = useState();
+  
+  useEffect(() => {
+    const savedCartItems = Cookies.get("cartItems");
+    if (savedCartItems) {
+      setCartNo((JSON.parse(savedCartItems)).length);
+    }
+  });
   return (
     <>
       {!(location.pathname === "/") && (
@@ -50,11 +59,12 @@ const Nav = () => {
               <Link to={"/Search"}>
                 <img src="\src\assets\akar_icons_search.png" alt="" />
               </Link>
-              <Link to={"/Cart"}>
+              <Link className="cart-icon" to={"/Cart"}>
                 <img
                   src="\src\assets\ant_design_shopping_cart_outlined.png"
                   alt=""
                 />
+                {cartNo != 0 ? (<span className="cart-counter">{cartNo}</span>):""}
               </Link>
             </div>
           </div>

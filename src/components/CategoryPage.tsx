@@ -34,6 +34,7 @@ const [Products, categoriesNames, isPending] = data;
   const { category } = useParams();
     const [page, setPage] = useState(1);
     const [section, setSection] = useState(1);
+const formatter = new Intl.NumberFormat("en-US");
 
   console.log(category);
   
@@ -127,7 +128,7 @@ const displayImg = [''];
                       <span className="pc">
                         {item.description.slice(0, 40)}...
                       </span>
-                      <b>&#8358;{item.price}</b>
+                      <b>&#8358;{formatter.format(Number(item.price))}</b>
                     </div>
                   </Link>
                 ))}

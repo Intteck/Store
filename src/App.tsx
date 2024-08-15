@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import CategoryPage from "./components/CategoryPage";
 import Startpage from "./components/Startpage";
 import HomePage from "./components/HomePage";
@@ -27,11 +27,17 @@ type productType = {
   name: string;
   description: string;
 };
+  type CartItem = {
+    id: number;
+    count: number;
+  };
+
 
 type CategoryKey ="Refrigerators" | "Freezers" | "Air Conditioners" | "Washing Machines" | "Microwaves Oven" |"Small Home Appliances" |"Phones" |"Accessories"| "Laptops" | "Tvs" ;
  
 function App() {
    const location = useLocation();
+   const [cart, setCartItems] = useState<CartItem[]>([]);
 
    useEffect(() => {
      window.scrollTo(0, 0);
@@ -82,15 +88,15 @@ function App() {
            />
            <Route
              path="/Product/:id"
-             element={<ProductPage data={[Products, isPending]} />}
+             element={<ProductPage data={[Products, isPending,cart,setCartItems]} />}
            />
            <Route
              path="/Product"
-             element={<ProductPage data={[Products, isPending]} />}
+             element={<ProductPage data={[Products, isPending,cart,setCartItems]} />}
            />
            <Route
              path="/Cart"
-             element={<CartPage data={[Products,isPending]} />}
+             element={<CartPage data={[Products,isPending,cart,setCartItems]} />}
            />
            <Route path="/Checkout" element={<CheckoutPage />} />
            <Route

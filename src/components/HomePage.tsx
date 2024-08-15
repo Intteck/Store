@@ -34,6 +34,7 @@ type productType = {
 type CategoryKey ="Refrigerators" | "Freezers" | "Air Conditioners" | "Washing Machines" | "Microwaves Oven" |"Small Home Appliances" |"Phones" |"Accessories"| "Laptops" | "Tvs" ;
 
 const HomePage = (props: homeProps) => {
+  const formatter = new Intl.NumberFormat("en-US");
 const {data} = props;
 const [Products,categoriesNames,isPending] = data;
                   var random = 0;
@@ -197,7 +198,7 @@ const [Products,categoriesNames,isPending] = data;
                     <h4 className="pc">{item.name.slice(0, 25)}...</h4>
                     <span className="mobile">{item.description.slice(0, 23)}...</span>
                     <span className="pc">{item.description.slice(0, 40)}...</span>
-                    <b>&#8358;{item.price}</b>
+                    <b>&#8358;{formatter.format(Number(item.price))}</b>
                   </div>
                 </Link>
               ))}

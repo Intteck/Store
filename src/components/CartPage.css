@@ -24,6 +24,7 @@ height: calc(6/100 * 100vw);
 
 .delete-icon{
         margin: auto;
+        cursor: pointer;
 }
 
 .cart-totals-container{

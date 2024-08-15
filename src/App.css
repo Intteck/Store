@@ -4,6 +4,22 @@
   box-sizing: border-box;
 }
 
+.cart-icon{
+  position: relative;
+}
+
+.cart-counter{
+  position: absolute;
+  font-size: 12px;
+  width: 5%;
+  top: 15%;
+  text-align: center;
+  border-radius: 100%;
+  background-color: red;
+  color: white;
+}
+
+
 .mobile-nav {
   display: flex;
   flex-direction: row;
@@ -218,9 +234,23 @@ color: black;
     align-items: center;
     width: 15%;
   }
-  .nav-icons > img {
-    width: 26px;
-  }
+
+.cart-icon{
+  position: relative;
+}
+
+.cart-counter{
+  position: absolute;
+  bottom: 65%;
+  left: 80%;
+  font-size: 12px;
+  width: 50%;
+  text-align: center;
+  border-radius: 100%;
+  background-color: red;
+  color: white;
+}
+
   .content {
     padding: 0px 15px;
     margin-bottom: 80px;

@@ -1,12 +1,17 @@
-  import React, { useState } from "react";
+  import React, { useEffect, useState } from "react";
   import { Link, useParams } from "react-router-dom";
   import Footer from "./Footer";
   import Nav from "./Nav";
-  import "./ProductPage.css"
+  import "./ProductPage.css";
+  import Cookies from "js-cookie";
 
   interface productProps {
-    data: [Products: ProductItem[] | null,
-  isPending: boolean];
+    data: [
+      Products: ProductItem[] | null,
+      isPending: boolean,
+      cart: CartItem[],
+      setCartItem: React.Dispatch<React.SetStateAction<CartItem[]>>
+    ];
   }
 
   type ProductItem = {
@@ -18,6 +23,11 @@
     price: number;
   };
 
+  type CartItem ={
+    id: number;
+    count: number;
+  }
+
   type productType = {
     id: number;
     name: string;
@@ -28,21 +38,36 @@
 
   const ProductPage = (props: productProps) => {
     const [heart,setHeart] = useState(true);
-      const [count,setCount] = useState(0);
+      const [count,setCount] = useState(1);
     const { data } = props;
-  const [Products,isPending] = data;
+    const formatter = new Intl.NumberFormat("en-US");
+  const [Products,isPending,cart,setCartItems] = data;
   const [page,setPage] = useState(1);
   const [section,setSection] = useState(1);
 
-  const cart = [
-    { id: 1, count: 3 },
-    { id: 4 , count: 3 },
-    { id: 5, count: 3 },
-  ];
+  useEffect(() => {
+    const savedCartItems = Cookies.get("cartItems");
+    if (savedCartItems) {
+      setCartItems(JSON.parse(savedCartItems));
+    }
+  }, []);
+
+
+  const addToCart = () => {
+    if(!cart.some((obj) => obj.id === selectedItem.id)){    
+    const item = {id:selectedItem.id, count: count}
+    const updatedCartItems = [...cart, item];
+    setCartItems(updatedCartItems);
+
+    Cookies.set("cartItems", JSON.stringify(updatedCartItems), { expires: 30 });}
+    else
+    console.log(Cookies.get("cartItems"));
+    
+  };
+
 
   const { id } = useParams();
     console.log(id);
-    
     if (id === undefined)
     return (
       <>
@@ -85,7 +110,7 @@
                       <span className="pc">
                         {item.description.slice(0, 40)}...
                       </span>
-                      <b>&#8358;{item.price}</b>
+                      <b>&#8358;{formatter.format(Number(item.price))}</b>
                     </div>
                   </Link>
                 ))}
@@ -101,19 +126,22 @@
         <Footer />
       </>
     );
+                      var random = 0;
+                      if (Products) {
+                        var [selectedItem] = Products!.filter((item) => {
+                          return item.id === Number(id);
+                        });
+                        random = Math.floor(
+                          Math.random() * (Products!.length - 4) + 1
+                        );
+                      }
 
-                  var random = 0;
-
-  if (Products) {
-      var [selectedItem] = Products!.filter((item) => {
-        return item.id === Number(id);
-      });
-              random = Math.floor(Math.random() * (Products!.length - 4) + 1);
-
-  }
 
       return (
         <>
+          <div className="pc">
+            <Nav />
+          </div>
           {isPending && (
             <div className="content">
               <div className="mobile-section-container">
@@ -138,7 +166,7 @@
               <div className="productpage-content">
                 <div className="selected-product-details">
                   <div className="align-verti-center">
-                    <b>&#8358;{selectedItem.price}</b>
+                    <b>&#8358;{formatter.format(Number(selectedItem.price))}</b>
                     <Link to={"/Product"}>
                       <img src="\src\assets\Share.png" alt="" />
                     </Link>
@@ -152,7 +180,7 @@
                         src="\src\assets\Less.svg"
                         alt=""
                         onClick={() => {
-                          count === 0 ? 0 : setCount(count - 1);
+                          count === 1 ? 1 : setCount(count - 1);
                         }}
                       />
                       <div>{count}</div>
@@ -181,8 +209,9 @@
                     </div>
                   </div>
                 </div>
+
                 <div className="selected-product-details-pc">
-                  <div>
+                  <div className="content">
                     <img
                       src={
                         "http://pretiosusadmin.gibsonline.com/Product_Images/" +
@@ -192,7 +221,9 @@
                     />
                     <div>
                       <h2>{selectedItem.name}</h2>
-                      <p>&#8358;{selectedItem.price}</p>
+                      <p>
+                        &#8358;{formatter.format(Number(selectedItem.price))}
+                      </p>
                       <p className="selected-product-Label-pc">
                         {selectedItem.description}
                       </p>
@@ -200,7 +231,7 @@
                         <span className="selected-product-count">
                           <span
                             onClick={() => {
-                              count === 0 ? 0 : setCount(count - 1);
+                              count === 1 ? 1 : setCount(count - 1);
                             }}
                           >
                             -
@@ -214,7 +245,22 @@
                             +
                           </span>
                         </span>
-                        <button>Add To Cart</button>
+                        <button onClick={addToCart}>
+                          {Products && (
+                            <>
+                              {cart.some(
+                                (obj) => obj.id === selectedItem.id
+                              ) ? (
+                                <img
+                                  src="\src\assets\check_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png"
+                                  style={{ width: "40px" }}
+                                />
+                              ) : (
+                                "Add to cart"
+                              )}
+                            </>
+                          )}
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -246,6 +292,7 @@
                               key={index}
                               className="mobile-product-card"
                               to={`/Product/${item.id}`}
+                              onClick={()=>{setCount(1)}}
                             >
                               <div className="image-holder">
                                 <img
@@ -257,11 +304,21 @@
                                 />
                               </div>
                               <div className="product-details">
-                    <h4 className="mobile">{item.name.slice(0, 15)}...</h4>
-                    <h4 className="pc">{item.name.slice(0, 25)}...</h4>
-                    <span className="mobile">{item.description.slice(0, 23)}...</span>
-                    <span className="pc">{item.description.slice(0, 40)}...</span>
-                                <b>&#8358;{item.price}</b>
+                                <h4 className="mobile">
+                                  {item.name.slice(0, 15)}...
+                                </h4>
+                                <h4 className="pc">
+                                  {item.name.slice(0, 25)}...
+                                </h4>
+                                <span className="mobile">
+                                  {item.description.slice(0, 23)}...
+                                </span>
+                                <span className="pc">
+                                  {item.description.slice(0, 40)}...
+                                </span>
+                                <b>
+                                  &#8358;{formatter.format(Number(item.price))}
+                                </b>
                               </div>
                             </Link>
                           ))}

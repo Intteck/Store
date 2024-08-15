@@ -1,6 +1,16 @@
-import React from "react";
+import Cookies from "js-cookie";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 const Footer = () => {
+    const [cartNo, setCartNo] = useState();
+
+    useEffect(() => {
+      const savedCartItems = Cookies.get("cartItems");
+      if (savedCartItems) {
+        setCartNo(JSON.parse(savedCartItems).length);
+      }
+    });
+
   return (
     <>
       {!(
@@ -89,6 +99,7 @@ const Footer = () => {
                 />
               </svg>
             </Link>
+            
             <Link to={"/Cart"}  className={`mobile-nav-icon ${
                 location.pathname === "/Cart" ? "active" : ""
               }`}>
@@ -143,6 +154,7 @@ const Footer = () => {
                   </clipPath>
                 </defs>
               </svg>
+          {cartNo != 0 ? (<span className="cart-counter">{cartNo}</span>):""}
             </Link>
             <Link to={"/Account"}  className={`mobile-nav-icon ${
                 location.pathname === "/Profile" || location.pathname === "/Account" ? "active" : ""

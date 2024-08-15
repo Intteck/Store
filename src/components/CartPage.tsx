@@ -1,12 +1,22 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Nav from "./Nav";
 import "./CartPage.css";
 import { Link } from "react-router-dom";
 import Footer from "./Footer";
-import { isNumberObject } from "util/types";
+  import Cookies from "js-cookie";
+
 interface cartProps {
-  data: [Products: ProductItem[] | null, isPending: boolean];
+  data: [
+    Products: ProductItem[] | null,
+    isPending: boolean,
+    cart: CartItem[],
+    setCartItem: React.Dispatch<React.SetStateAction<CartItem[]>>
+  ];
 }
+  type CartItem = {
+    id: number;
+    count: number;
+  };
 
 type ProductItem = {
   id: number;
@@ -27,19 +37,28 @@ type productType = {
 
 const CartPage = (props:cartProps) => {
   const { data } = props;
-    const [Products,isPending] = data;
+  const [Products, isPending, cart, setCartItems] = data;
 const formatter = new Intl.NumberFormat("en-US");
-
-  const cart = [
-    { id: 508, count: 3 },
-    { id: 410, count: 3 },
-    { id: 81, count: 3 },
-  ];
 
   const [installno, setInstallno] = useState(1);
   const buttons = Array.from({ length: installno }, (_, i) => i + 1);
   
 const [installmentInfo, setInstallmentInfo] = useState(false);
+
+  useEffect(() => {
+    const savedCartItems = Cookies.get("cartItems");
+    if (savedCartItems) {
+      setCartItems(JSON.parse(savedCartItems));
+    }
+  }, []);
+
+   const removeFromCart = (id: number) => {
+    const updatedCartItems = cart.filter((item) => item.id !== id);
+    setCartItems(updatedCartItems);
+        Cookies.set("cartItems", JSON.stringify(updatedCartItems), { expires: 30 });
+
+    
+}
 
   return (
     <>
@@ -78,7 +97,7 @@ const [installmentInfo, setInstallmentInfo] = useState(false);
                       className="cart-item-icon"
                       alt=""
                     />
-                    <span>{item.description}</span>
+                    <span>{item.name}</span>
                     <span>&#8358;{ formatter.format(Number(item.price))}</span>
                     <span className="col4">
                       {cart.find((tem) => tem.id === item.id)?.count}
@@ -92,6 +111,7 @@ const [installmentInfo, setInstallmentInfo] = useState(false);
                       src="\src\assets\Vector.png"
                       alt=""
                       className="delete-icon"
+                      onClick={()=>{removeFromCart(item.id);}}
                     />
                   </>
                 ))}
