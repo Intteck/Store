@@ -1,11 +1,32 @@
 import Cookies from "js-cookie";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-const Footer = () => {
+
+interface footerProps {
+  data: [customerDetails: CustomerDetails];
+}
+type CustomerDetails = {
+  id: number;
+  first_name: string;
+  last_name: string;
+  dob: string;
+  email: string;
+  phone_number: string;
+  address: string;
+  country: string;
+  state: string;
+  city: string;
+};
+
+
+
+const Footer = (props:footerProps) => {
     const [cartNo, setCartNo] = useState();
+      const { data } = props;
+  const [customerDetails] = data;
 
     useEffect(() => {
-      const savedCartItems = Cookies.get("cartItems");
+      const savedCartItems = Cookies.get("cartItems"+customerDetails.id);
       if (savedCartItems) {
         setCartNo(JSON.parse(savedCartItems).length);
       }
@@ -205,18 +226,25 @@ const Footer = () => {
 Pako Bus stop, Alimosho-Ipaja Road, Lagos
                 </span>
               </div>
-              <div className="footer-links">
-                <h5>Links</h5>
-                <span>Home</span>
-                <span>Shop</span>
-                <span>About</span>
-                <span>Contact</span>
-              </div>
+
               <div className="footer-links">
                 <h5>Help</h5>
-                <span>Payment Options</span>
-                <span>Returns</span>
-                <span>Privacy Policies</span>
+                <Link to={""}>FAQ</Link>
+              </div>
+
+              <div className="footer-links">
+                <h5>Links</h5>
+                <Link to={"/Home"}>Home</Link>
+                <Link to={"/Product"}>Shop</Link>
+                <Link to={"/About"}>About</Link>
+                <Link to={"/Contact"}>Contact</Link>
+              </div>
+
+              <div className="footer-links">
+                <h5>Terms of service</h5>
+                <Link to={""}>Terms and Condition</Link>
+                <Link to={""}>Privacy Policy </Link>
+                <Link to={""}>After Sales Support & General Warranty</Link>
               </div>
               <div className="footer-links">
                 <h5>Newsletter</h5>

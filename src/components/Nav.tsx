@@ -1,12 +1,36 @@
 import Cookies from "js-cookie";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-const Nav = () => {
+interface navProps {
+  data: [
+    customerDetails: CustomerDetails
+  ];
+}
+
+type CustomerDetails = {
+  id: number;
+  first_name: string;
+  last_name: string;
+  dob: string;
+  email: string;
+  phone_number: string;
+  address: string;
+  country: string;
+  state: string;
+  city: string;
+};
+
+
+const Nav = (props:navProps) => {
+        const { data } = props;
+        const [customerDetails] = data;
+
   const [cartNo, setCartNo] = useState();
   
   useEffect(() => {
-    const savedCartItems = Cookies.get("cartItems");
-    if (savedCartItems) {
+    const savedCartItems = Cookies.get("cartItems"+customerDetails.id);
+     console.log(savedCartItems);
+    if (savedCartItems) {      
       setCartNo((JSON.parse(savedCartItems)).length);
     }
   });
@@ -49,8 +73,8 @@ const Nav = () => {
             <div className="nav-links">
               <Link to={"/Home"}>Home</Link>
               <Link to={"/Product"}>Shop</Link>
-              <li>About</li>
-              <li>Contact</li>
+              <Link to={"/About"}>About</Link>
+              <Link to={"/Contact"}>Contact</Link>
             </div>
             <div className="nav-icons">
               <Link to={"/Account"}>

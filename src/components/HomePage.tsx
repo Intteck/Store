@@ -10,6 +10,7 @@ import "/node_modules/swiper/swiper-bundle.min.css";
 
 interface homeProps {
   data: [
+        customerDetails: CustomerDetails,
     Products: ProductItem[] | null,
     categoriesNames: CategoryKey[],
     isPending: boolean,
@@ -25,6 +26,20 @@ type ProductItem = {
   price: number;
 };
 
+type CustomerDetails = {
+  id: number;
+  first_name: string;
+  last_name: string;
+  dob: string;
+  email: string;
+  phone_number: string;
+  address: string;
+  country: string;
+  state: string;
+  city: string;
+};
+
+
 type productType = {
   id: number;
   name: string;
@@ -36,7 +51,7 @@ type CategoryKey ="Refrigerators" | "Freezers" | "Air Conditioners" | "Washing M
 const HomePage = (props: homeProps) => {
   const formatter = new Intl.NumberFormat("en-US");
 const {data} = props;
-const [Products,categoriesNames,isPending] = data;
+const [customerDetails, Products, categoriesNames, isPending] = data;
                   var random = 0;
 
                   if (Products) {
@@ -48,7 +63,7 @@ const [Products,categoriesNames,isPending] = data;
 
   return (
     <>
-      <Nav />
+      <Nav data={[customerDetails]} />
       <div>
         <div className="Hero-image pc">
           <div
@@ -60,9 +75,7 @@ const [Products,categoriesNames,isPending] = data;
             <h1>
               Discover Our <br></br>New Collection
             </h1>
-            <span>
-             Get the best deals on your favourite products!!!
-            </span>
+            <span>Get the best deals on your favourite products!!!</span>
             <Link to={"/Product"}>
               <button>Buy Now</button>
             </Link>
@@ -136,15 +149,22 @@ const [Products,categoriesNames,isPending] = data;
                   data-aos-delay={50 * index}
                 >
                   <div>
-                    {Products && Products!
-                      .filter((item) => {
-                        return item.product_Type[0].name == category;
-                      })
-                      .slice(0, 4)
-                      .map((item, index) => (
-                        <img key={index} src={"http://pretiosusadmin.gibsonline.com/Product_Images/"+item.image_URL} alt={item.name} />
-                      ))}
-                    
+                    {Products &&
+                      Products!
+                        .filter((item) => {
+                          return item.product_Type[0].name == category;
+                        })
+                        .slice(0, 4)
+                        .map((item, index) => (
+                          <img
+                            key={index}
+                            src={
+                              "https://pretiosusadmin.gibsonline.com/Product_Images/" +
+                              item.image_URL
+                            }
+                            alt={item.name}
+                          />
+                        ))}
                   </div>
                   <span>{category}</span>
                 </Link>
@@ -187,7 +207,7 @@ const [Products,categoriesNames,isPending] = data;
                   <div className="image-holder">
                     <img
                       src={
-                        "http://pretiosusadmin.gibsonline.com/Product_Images/" +
+                        "https://pretiosusadmin.gibsonline.com/Product_Images/" +
                         item.image_URL
                       }
                       alt={item.name}
@@ -196,8 +216,12 @@ const [Products,categoriesNames,isPending] = data;
                   <div className="product-details">
                     <h4 className="mobile">{item.name.slice(0, 15)}...</h4>
                     <h4 className="pc">{item.name.slice(0, 25)}...</h4>
-                    <span className="mobile">{item.description.slice(0, 23)}...</span>
-                    <span className="pc">{item.description.slice(0, 40)}...</span>
+                    <span className="mobile">
+                      {item.description.slice(0, 23)}...
+                    </span>
+                    <span className="pc">
+                      {item.description.slice(0, 40)}...
+                    </span>
                     <b>&#8358;{formatter.format(Number(item.price))}</b>
                   </div>
                 </Link>
@@ -210,7 +234,7 @@ const [Products,categoriesNames,isPending] = data;
           </div>
         </section>
       </div>
-      <Footer />
+      <Footer data={[customerDetails]} />
     </>
   );
 };

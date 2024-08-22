@@ -7,6 +7,7 @@ import Footer from "./Footer";
 
 interface cartProps {
   data: [
+    customerDetails: CustomerDetails,
     Products: ProductItem[] | null,
     isPending: boolean,
     cart: CartItem[],
@@ -33,12 +34,29 @@ type productType = {
   description: string;
 };
 
+type CustomerDetails = {
+  id: number;
+  first_name: string;
+  last_name: string;
+  dob: string;
+  email: string;
+  phone_number: string;
+  address: string;
+  country: string;
+  state: string;
+  city: string;
+};
+
+
 
 
 const CartPage = (props:cartProps) => {
   const { data } = props;
-  const [Products, isPending, cart, setCartItems] = data;
+  const [customerDetails,Products, isPending, cart, setCartItems] = data;
 const formatter = new Intl.NumberFormat("en-US");
+    if(Products){ Total = formatter.format(Number(Products!.filter((item) => { return cart.some((obj) => obj.id === item.id);}).reduce((sum,item) => sum+cart.find((tem) => tem.id === item.id)?.count! *
+                          item.price,0)))}
+                          else{var Total = "";}
 
   const [installno, setInstallno] = useState(1);
   const buttons = Array.from({ length: installno }, (_, i) => i + 1);
@@ -46,7 +64,7 @@ const formatter = new Intl.NumberFormat("en-US");
 const [installmentInfo, setInstallmentInfo] = useState(false);
 
   useEffect(() => {
-    const savedCartItems = Cookies.get("cartItems");
+    const savedCartItems = Cookies.get("cartItems"+customerDetails.id);
     if (savedCartItems) {
       setCartItems(JSON.parse(savedCartItems));
     }
@@ -55,14 +73,14 @@ const [installmentInfo, setInstallmentInfo] = useState(false);
    const removeFromCart = (id: number) => {
     const updatedCartItems = cart.filter((item) => item.id !== id);
     setCartItems(updatedCartItems);
-        Cookies.set("cartItems", JSON.stringify(updatedCartItems), { expires: 30 });
+        Cookies.set("cartItems"+customerDetails.id, JSON.stringify(updatedCartItems), { expires: 30 });
 
     
 }
 
   return (
     <>
-      <Nav />
+      <Nav data={[customerDetails]} />
       <div className="content">
         <div className="mobile-section-container">
           {isPending && (
@@ -89,29 +107,36 @@ const [installmentInfo, setInstallmentInfo] = useState(false);
                 })
                 .map((item) => (
                   <>
-                    <img
-                      src={
-                        "http://pretiosusadmin.gibsonline.com/Product_Images/" +
-                        item.image_URL
-                      }
-                      className="cart-item-icon"
-                      alt=""
-                    />
+                    <div className="cart-item-icon">
+                      <img
+                        src={
+                          "https://pretiosusadmin.gibsonline.com/Product_Images/" +
+                          item.image_URL
+                        }
+                        alt=""
+                      />
+                    </div>
                     <span>{item.name}</span>
-                    <span>&#8358;{ formatter.format(Number(item.price))}</span>
+                    <span>&#8358;{formatter.format(Number(item.price))}</span>
                     <span className="col4">
-                      {cart.find((tem) => tem.id === item.id)?.count}
+                      <span className="cart-item-count">{cart.find((tem) => tem.id === item.id)?.count}</span>
                     </span>
                     <span>
                       &#8358;
-                      { formatter.format(Number(cart.find((tem) => tem.id === item.id)?.count! *
-                        item.price))}
+                      {formatter.format(
+                        Number(
+                          cart.find((tem) => tem.id === item.id)?.count! *
+                            item.price
+                        )
+                      )}
                     </span>
                     <img
                       src="\src\assets\Vector.png"
                       alt=""
                       className="delete-icon"
-                      onClick={()=>{removeFromCart(item.id);}}
+                      onClick={() => {
+                        removeFromCart(item.id);
+                      }}
                     />
                   </>
                 ))}
@@ -128,20 +153,23 @@ const [installmentInfo, setInstallmentInfo] = useState(false);
                       <span>Subtotal</span>
                       <span>
                         &#8358;
-                        { formatter.format(Number(cart.find((tem) => tem.id === item.id)?.count! *
-                          item.price))}
+                        {formatter.format(
+                          Number(
+                            cart.find((tem) => tem.id === item.id)?.count! *
+                              item.price
+                          )
+                        )}
                       </span>
                     </div>
                   ))}
 
-                    <div className="cart-subtotal">
-                      <span>Total</span>
-                      <span className="cart-total">                       
-                        &#8358;
-{formatter.format(Number(Products!.filter((item) => { return cart.some((obj) => obj.id === item.id);}).reduce((sum,item) => sum+cart.find((tem) => tem.id === item.id)?.count! *
-                          item.price,0)))}</span>
-                 </div>
-               
+                <div className="cart-subtotal">
+                  <span>Total</span>
+                  <span className="cart-total">
+                    &#8358;
+                    {Total}
+                  </span>
+                </div>
               </div>
               <div className="cart-total-buttons">
                 <button
@@ -215,7 +243,7 @@ const [installmentInfo, setInstallmentInfo] = useState(false);
           </>
         )}
       </div>
-      <Footer />
+      <Footer data={[customerDetails]} />
     </>
   );
 };

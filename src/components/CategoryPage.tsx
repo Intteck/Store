@@ -4,10 +4,27 @@ import "./CategoryPage.css"
 import Nav from "./Nav";
 import Footer from "./Footer";
 interface shopProps {
-  data: [Products: ProductItem[] | null, 
-  categoriesNames: CategoryKey[],
-  isPending: boolean],
+  data: [
+    customerDetails: CustomerDetails,
+    Products: ProductItem[] | null,
+    categoriesNames: CategoryKey[],
+    isPending: boolean
+  ];
 }
+
+type CustomerDetails = {
+  id: number;
+  first_name: string;
+  last_name: string;
+  dob: string;
+  email: string;
+  phone_number: string;
+  address: string;
+  country: string;
+  state: string;
+  city: string;
+};
+
 
 type ProductItem = {
   id: number;
@@ -30,7 +47,7 @@ type CategoryKey ="Tvs" | "Refrigerators" | "Freezers" | "Air Conditioners" | "W
 const CategoryPage = (props: shopProps) => {
   const { data } = props;
   const [arrow, setArrowActive] = useState(false);
-const [Products, categoriesNames, isPending] = data;
+const [customerDetails, Products, categoriesNames, isPending] = data;
   const { category } = useParams();
     const [page, setPage] = useState(1);
     const [section, setSection] = useState(1);
@@ -46,7 +63,7 @@ const displayImg = [''];
  if (category === undefined) {
     return (
       <>
-        <Nav />
+        <Nav data={[customerDetails]} />
         <div className="content">
           <div className="mobile-categorypage-list">
             {categoriesNames.map((item, index) => (
@@ -76,13 +93,13 @@ const displayImg = [''];
                 <h3 className="foryou-heading">Just For You</h3>
               </div>
 
-            <Link to={"/Product"} className="seeAllBtn mobile">
+              <Link to={"/Product"} className="seeAllBtn mobile">
                 <img src="\src\assets\Arrow.png" alt="" />
               </Link>
             </div>
           </div>
         </div>
-        <Footer />
+        <Footer data={[customerDetails]} />
       </>
     );
   }
@@ -90,7 +107,7 @@ const displayImg = [''];
 
   return (
     <>
-      <Nav />
+      <Nav data={[customerDetails]} />
       <div className="content">
         <div className="all-products-list">
           <div className="mobile-section-container">
@@ -103,7 +120,8 @@ const displayImg = [''];
             )}
 
             {Products &&
-              filteredProducts!.slice(0 + 20 * (page - 1), 20 * page)
+              filteredProducts!
+                .slice(0 + 20 * (page - 1), 20 * page)
                 .map((item, index) => (
                   <Link
                     key={index}
@@ -113,7 +131,7 @@ const displayImg = [''];
                     <div className="image-holder">
                       <img
                         src={
-                          "http://pretiosusadmin.gibsonline.com/Product_Images/" +
+                          "https://pretiosusadmin.gibsonline.com/Product_Images/" +
                           item.image_URL
                         }
                         alt={item.name}
@@ -133,17 +151,78 @@ const displayImg = [''];
                   </Link>
                 ))}
           </div>
-                    {filteredProducts && <div className="product-pagination" >
-            <button style={{display: section === 1 ? "none":"inline"}} onClick={()=>{setPage(section-1); setSection(section-1)}}>Previous</button>
-            <button className={page === section?"active":""} onClick={()=>{setPage(section);}}>{section}</button>
-            <button className={page === section+1?"active":""} style={{display: section+1 > Math.ceil(filteredProducts.length/20) ? "none":"inline"}} onClick={()=>{setPage(section+1)}}>{section+1}</button>
-            <button className={page === section+2?"active":""} style={{display: section === Math.floor(filteredProducts.length/20) ? "none":"inline"}}  onClick={()=>{setPage(section+2)}}>{section+2}</button>
-            <button style={{display: section >= Math.floor(filteredProducts.length/20) ? "none":"inline"}} onClick={()=>{setPage(section+1); setSection(section+1); console.log(Products.length/20)}}>Next</button>
-          </div>}
-
+          {filteredProducts && (
+            <div className="product-pagination">
+              <button
+                style={{ display: section === 1 ? "none" : "inline" }}
+                onClick={() => {
+                  setPage(section - 1);
+                  setSection(section - 1);
+                       window.scrollTo(0, 0);
+                }}
+              >
+                Previous
+              </button>
+              <button
+                className={page === section ? "active" : ""}
+                onClick={() => {
+                  setPage(section);
+                       window.scrollTo(0, 0);
+                }}
+              >
+                {section}
+              </button>
+              <button
+                className={page === section + 1 ? "active" : ""}
+                style={{
+                  display:
+                    section + 1 > Math.ceil(filteredProducts.length / 20)
+                      ? "none"
+                      : "inline",
+                }}
+                onClick={() => {
+                  setPage(section + 1);
+                       window.scrollTo(0, 0);
+                }}
+              >
+                {section + 1}
+              </button>
+              <button
+                className={page === section + 2 ? "active" : ""}
+                style={{
+                  display:
+                    section === Math.floor(filteredProducts.length / 20)
+                      ? "none"
+                      : "inline",
+                }}
+                onClick={() => {
+                  setPage(section + 2);
+                       window.scrollTo(0, 0);
+                }}
+              >
+                {section + 2}
+              </button>
+              <button
+                style={{
+                  display:
+                    section >= Math.floor(filteredProducts.length / 20)
+                      ? "none"
+                      : "inline",
+                }}
+                onClick={() => {
+                  setPage(section + 1);
+                  setSection(section + 1);
+                       window.scrollTo(0, 0);
+                  console.log(Products.length / 20);
+                }}
+              >
+                Next
+              </button>
+            </div>
+          )}
         </div>
       </div>
-      <Footer />
+      <Footer data={[customerDetails]} />
     </>
   );
 }; 

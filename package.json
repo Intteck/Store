@@ -10,10 +10,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@paystack/inline-js": "^2.20.2",
     "aos": "^3.0.0-beta.6",
     "bootstrap": "^5.2.3",
     "js-cookie": "^3.0.5",
     "js-cookies": "^1.0.4",
+    "nvm": "^0.0.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.23.0",

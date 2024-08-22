@@ -1,9 +1,26 @@
 import React from "react";
 import Footer from "./Footer";
 import "./Profile.css"
+interface Props {
+  data: [customerDetails: CustomerDetails];
+}
 
-const Profile =()=>{
- 
+type CustomerDetails = {
+  id: number;
+  first_name: string;
+  last_name: string;
+  dob: string;
+  email: string;
+  phone_number: string;
+  address: string;
+  country: string;
+  state: string;
+  city: string;
+};
+
+const Profile =(props:Props)=>{
+         const { data } = props;
+         const [customerDetails] = data;
     
     return(
 <>
@@ -16,7 +33,7 @@ const Profile =()=>{
  <h2 className="Text8">Check Your History &darr;</h2>
  <button id="doneHistory" ><h2 className="text3">History</h2></button>
 </div>
-<Footer />
+<Footer data={[customerDetails]} />
 </>
 
     );

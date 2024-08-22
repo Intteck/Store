@@ -7,6 +7,7 @@
 
   interface productProps {
     data: [
+          customerDetails: CustomerDetails,
       Products: ProductItem[] | null,
       isPending: boolean,
       cart: CartItem[],
@@ -34,6 +35,18 @@
     description: string;
   };
 
+type CustomerDetails = {
+  id: number;
+  first_name: string;
+  last_name: string;
+  dob: string;
+  email: string;
+  phone_number: string;
+  address: string;
+  country: string;
+  state: string;
+  city: string;
+};
 
 
   const ProductPage = (props: productProps) => {
@@ -41,12 +54,12 @@
       const [count,setCount] = useState(1);
     const { data } = props;
     const formatter = new Intl.NumberFormat("en-US");
-  const [Products,isPending,cart,setCartItems] = data;
+  const [customerDetails, Products, isPending, cart, setCartItems] = data;
   const [page,setPage] = useState(1);
   const [section,setSection] = useState(1);
 
   useEffect(() => {
-    const savedCartItems = Cookies.get("cartItems");
+    const savedCartItems = Cookies.get("cartItems"+customerDetails.id);
     if (savedCartItems) {
       setCartItems(JSON.parse(savedCartItems));
     }
@@ -59,9 +72,9 @@
     const updatedCartItems = [...cart, item];
     setCartItems(updatedCartItems);
 
-    Cookies.set("cartItems", JSON.stringify(updatedCartItems), { expires: 30 });}
+    Cookies.set("cartItems"+customerDetails.id, JSON.stringify(updatedCartItems), { expires: 30 });}
     else
-    console.log(Cookies.get("cartItems"));
+    console.log(Cookies.get("cartItems" + customerDetails.id));
     
   };
 
@@ -71,7 +84,7 @@
     if (id === undefined)
     return (
       <>
-        <Nav />
+        <Nav data={[customerDetails]} />
         <div className="content">
           <div className="mobile-section-container">
             {isPending && (
@@ -95,7 +108,7 @@
                     <div className="image-holder">
                       <img
                         src={
-                          "http://pretiosusadmin.gibsonline.com/Product_Images/" +
+                          "https://pretiosusadmin.gibsonline.com/Product_Images/" +
                           item.image_URL
                         }
                         alt={item.name}
@@ -115,15 +128,88 @@
                   </Link>
                 ))}
           </div>
-          {Products && <div className="product-pagination" >
-            <button style={{display: section === 1 ? "none":"inline"}} onClick={()=>{setPage(section-1); setSection(section-1)}}>Previous</button>
-            <button className={page === section?"active":""} onClick={()=>{setPage(section);}}>{section}</button>
-            <button className={page === section+1?"active":""} style={{display: section+1 > Math.ceil(Products.length/20) ? "none":"inline"}} onClick={()=>{setPage(section+1)}}>{section+1}</button>
-            <button className={page === section+2?"active":""} style={{display: section === Math.floor(Products.length/20) ? "none":"inline"}}  onClick={()=>{setPage(section+2)}}>{section+2}</button>
-            <button style={{display: Math.floor(Products.length/20) === section || Math.floor(Products.length/20) <= 0 ? "none":"inline"}} onClick={()=>{setPage(section+1); setSection(section+1); console.log(Products.length/20)}}>Next</button>
-          </div>}
+          {Products && (
+            <div className="product-pagination">
+              <button
+                style={{ display: section === 1 ? "none" : "inline" }}
+                onClick={() => {
+                  setTimeout(() => {
+                    setPage(section - 1);
+                    setSection(section - 1);
+                    window.scrollTo(0, 0);
+                  }, 500);
+                }}
+              >
+                Previous
+              </button>
+              <button
+                className={page === section ? "active" : ""}
+                onClick={() => {
+                  setTimeout(() => {
+                    setPage(section);
+                    window.scrollTo(0, 0);
+                  }, 500);
+                }}
+              >
+                {section}
+              </button>
+              <button
+                className={page === section + 1 ? "active" : ""}
+                style={{
+                  display:
+                    section + 1 > Math.ceil(Products.length / 20)
+                      ? "none"
+                      : "inline",
+                }}
+                onClick={() => {
+                  setTimeout(() => {
+                    setPage(section + 1);
+                    window.scrollTo(0, 0);
+                  }, 500);
+                }}
+              >
+                {section + 1}
+              </button>
+              <button
+                className={page === section + 2 ? "active" : ""}
+                style={{
+                  display:
+                    section === Math.floor(Products.length / 20)
+                      ? "none"
+                      : "inline",
+                }}
+                onClick={() => {
+                  setTimeout(() => {
+                    setPage(section + 2);
+                    window.scrollTo(0, 0);
+                  }, 500);
+                }}
+              >
+                {section + 2}
+              </button>
+              <button
+                style={{
+                  display:
+                    Math.floor(Products.length / 20) === section ||
+                    Math.floor(Products.length / 20) <= 0
+                      ? "none"
+                      : "inline",
+                }}
+                onClick={() => {
+                  setTimeout(() => {
+                    setPage(section + 1);
+                    setSection(section + 1);
+                    window.scrollTo(0, 0);
+                    console.log(Products.length / 20);
+                  }, 500);
+                }}
+              >
+                Next
+              </button>
+            </div>
+          )}
         </div>
-        <Footer />
+        <Footer data={[customerDetails]} />
       </>
     );
                       var random = 0;
@@ -140,7 +226,7 @@
       return (
         <>
           <div className="pc">
-            <Nav />
+            <Nav data={[customerDetails]} />
           </div>
           {isPending && (
             <div className="content">
@@ -157,7 +243,7 @@
             <>
               <img
                 src={
-                  "http://pretiosusadmin.gibsonline.com/Product_Images/" +
+                  "https://pretiosusadmin.gibsonline.com/Product_Images/" +
                   selectedItem.image_URL
                 }
                 alt=""
@@ -214,7 +300,7 @@
                   <div className="content">
                     <img
                       src={
-                        "http://pretiosusadmin.gibsonline.com/Product_Images/" +
+                        "https://pretiosusadmin.gibsonline.com/Product_Images/" +
                         selectedItem.image_URL
                       }
                       alt=""
@@ -292,12 +378,14 @@
                               key={index}
                               className="mobile-product-card"
                               to={`/Product/${item.id}`}
-                              onClick={()=>{setCount(1)}}
+                              onClick={() => {
+                                setCount(1);
+                              }}
                             >
                               <div className="image-holder">
                                 <img
                                   src={
-                                    "http://pretiosusadmin.gibsonline.com/Product_Images/" +
+                                    "https://pretiosusadmin.gibsonline.com/Product_Images/" +
                                     item.image_URL
                                   }
                                   alt=""
@@ -360,7 +448,7 @@
             </button>
             <button className="buyNow">Buy now</button>
           </footer>
-          <Footer />
+          <Footer data={[customerDetails]} />
         </>
       );
   };
