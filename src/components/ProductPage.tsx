@@ -1,5 +1,5 @@
   import React, { useEffect, useState } from "react";
-  import { Link, useParams } from "react-router-dom";
+  import { Link, useNavigate, useParams } from "react-router-dom";
   import Footer from "./Footer";
   import Nav from "./Nav";
   import "./ProductPage.css";
@@ -57,6 +57,8 @@ type CustomerDetails = {
   const [customerDetails, Products, isPending, cart, setCartItems] = data;
   const [page,setPage] = useState(1);
   const [section,setSection] = useState(1);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const savedCartItems = Cookies.get("cartItems"+customerDetails.id);
@@ -432,7 +434,7 @@ type CustomerDetails = {
               }}
               alt=""
             />
-            <button className="addCart">
+            <button className="addCart" onClick={addToCart}>
               {Products && (
                 <>
                   {cart.some((obj) => obj.id === selectedItem.id) ? (
@@ -446,7 +448,7 @@ type CustomerDetails = {
                 </>
               )}
             </button>
-            <button className="buyNow">Buy now</button>
+            <button className="buyNow" onClick={()=>{addToCart(); navigate("/cart")}}>Buy now</button>
           </footer>
           <Footer data={[customerDetails]} />
         </>
