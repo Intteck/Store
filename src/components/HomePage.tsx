@@ -94,30 +94,11 @@ const [customerDetails, Products, categoriesNames, isPending] = data;
               onSwiper={(swiper: any) => console.log(swiper)}
               onSlideChange={() => console.log("slide change")}
             >
-              <SwiperSlide className="slide1">
-                <img src="/src/assets/Big Sale Banner.png" alt="" />
-              </SwiperSlide>
-              <SwiperSlide className="slide2">
-                <img
-                  src="/src/assets/special-offer-sale-banner-with-megaphone-free-vector.jpg"
-                  alt=""
-                />
-              </SwiperSlide>
-              <SwiperSlide className="slide3">
-                <img
-                  src="/src/assets/big-deal-special-offer-sale-banner-with-editable-text-effect_535749-276.jpg"
-                  alt=""
-                />
-              </SwiperSlide>
-              <SwiperSlide className="slide4">
-                <img src="/src/assets/Big Sale Banner.png" alt="" />
-              </SwiperSlide>
-              <SwiperSlide className="slide5">
-                <img
-                  src="/src/assets/special-offer-sale-banner-with-megaphone-free-vector.jpg"
-                  alt=""
-                />
-              </SwiperSlide>
+              {Array.from({ length: 4 }).map((_, index) => (
+                <SwiperSlide className={"slide"+(index+1)}>
+                  <img src={"https://pretiosusadmin.gibsonline.com/Product_Images/banner/"+(index+1)+".jpg"} alt="" />
+                </SwiperSlide>
+              ))}
             </Swiper>
           </div>
 
