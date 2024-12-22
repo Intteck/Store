@@ -1,5 +1,6 @@
+import Cookies from "js-cookie";
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./Login.css";
 
 type Details = {
@@ -16,25 +17,32 @@ type CustomerDetails = {
   phone_number: string;
   address: string;
   country: string;
+  postalCode: string;
   state: string;
   city: string;
+  wallet_amt: number;
+  wishlist: string[];
 };
 
 interface loginProps {
   data: [
-    setCustomerDetails: React.Dispatch<React.SetStateAction<CustomerDetails>>
+    setCustomerDetails: React.Dispatch<React.SetStateAction<CustomerDetails>>,
+    setRole: React.Dispatch<React.SetStateAction<string>>,
+    setInCheckout: React.Dispatch<React.SetStateAction<boolean>>,
+    inCheckout: boolean
   ];
 }
 
 const Login = (props: loginProps) => {
   const { data } = props;
-  const [setCustomerDetails] = data;
+  const [setCustomerDetails,setRole, setInCheckout,inCheckout] = data;
   const [touched, setTouched] = useState({
     email: false,
     password: false,
   });
   const navigate = useNavigate();
   const [logPend, setLogPend] = useState(false);
+  const [passVisible, setPassVisible] = useState(false);
   const [Details, setDetails] = useState<Details>({
     email: "",
     password: "",
@@ -85,17 +93,51 @@ const Login = (props: loginProps) => {
           }
           return response.json();
         })
-        .then((data) => {
-          console.log("Customer info retrieved", data);
-          setCustomerDetails(data.detail[0]);
+        .then((data) => {   
+          fetch(
+            "https://pretiosusapi.gibsonline.com/api/Customers/" +
+              data.detail[0].id,
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          )
+          .then(async (response) => {
+            if (!response.ok) {
+              const error = await response.json();
+              throw new Error(`Failed to send details. ${error.message}`);
+            }
+            return response.json();
+          })
+          .then((data2) => {
+          console.log("Customer info retrieved", data2, data.detail[0].role);
+          setCustomerDetails({...data2});     
+          setRole(data.detail[0].role); 
                  setLogPend(false);
-      /*     Cookies.set(
+      Cookies.set(
             "customerDetails",
-            JSON.stringify({ ...data.detail[0], password: password }),
+            JSON.stringify(data2),
             { expires: 7 }
-          ); */
+          ); 
+                     Cookies.set(
+                       "customerRole",
+                       JSON.stringify(data.detail[0].role),
+                       {
+                         expires: 7,
+                       }
+                     ); 
+
+
+          if(inCheckout){
+          setInCheckout(false);
+          navigate("/Checkout");
+          }
+          else
           navigate("/Home");
         })
+      })
         .catch((error) => {
                  setLogPend(false);
           console.error("Error sending info:", error);
@@ -109,9 +151,11 @@ const Login = (props: loginProps) => {
     <>
       <div className="content">
         <h1 className="text4">Login</h1>
-        {logPend && <div className="loading-screen">
-          <div className="loader"></div>
-        </div>}
+        {logPend && (
+          <div className="loading-screen">
+            <div className="loader"></div>
+          </div>
+        )}
         <div className="formContainer">
           <form method="post">
             <div className="form-group">
@@ -127,8 +171,11 @@ const Login = (props: loginProps) => {
                 placeholder="Email"
                 required
               />
+              <img src="" alt="" />
             </div>
-            {touched.email && !Details.email && <span>Field must be field in</span>}
+            {touched.email && !Details.email && (
+              <span>Field must be field in</span>
+            )}
 
             <div className="form-group">
               <input
@@ -136,15 +183,63 @@ const Login = (props: loginProps) => {
                 onChange={(e) =>
                   setDetails({ ...Details, password: e.target.value })
                 }
-                type="password"
+                type={passVisible ? "text" : "password"}
                 id="formInput"
                 name="password"
                 value={Details.password}
                 placeholder="Password"
                 required
               />
+              &nbsp;{" "}
+              {passVisible ? (
+                <img
+                  src="\src\assets\visibility_24dp_000000_FILL0_wght400_GRAD0_opsz24.png"
+                  className="visibilityIcon"
+                  alt=""
+                  onClick={() => {
+                    setPassVisible(false);
+                  }}
+                />
+              ) : (
+                <img
+                  src="\src\assets\visibility_off_24dp_000000_FILL0_wght400_GRAD0_opsz24.png"
+                  alt=""
+                  className="visibilityIcon"
+                  onClick={() => {
+                    setPassVisible(true);
+                  }}
+                />
+              )}
             </div>
-            {touched.password && !Details.password && <span>Field must be field in</span>}
+            {touched.password && !Details.password && (
+              <span>Field must be field in</span>
+            )}
+
+            <Link className="Text3" to={"/Recovery"}>
+              <p>Forgot your password?</p>
+            </Link>
+
+            <h2 className="Text2">
+              I don't have an account
+              <Link to={"/Account"}>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="30"
+                  height="30"
+                  viewBox="0 0 30 30"
+                  fill="none"
+                >
+                  <path
+                    d="M15 30C23.2843 30 30 23.2843 30 15C30 6.71573 23.2843 0 15 0C6.71573 0 0 6.71573 0 15C0 23.2843 6.71573 30 15 30Z"
+                    fill="#261870"
+                  />
+                  <path
+                    d="M16.6716 9.29501L15.492 10.4987L19.2476 14.1461H8.089V15.8313H19.2476L15.492 19.4786L16.6716 20.6823L22.5458 14.9887L16.6716 9.29501Z"
+                    fill="white"
+                  />
+                </svg>
+              </Link>
+            </h2>
 
             <div className="formBtn">
               <button

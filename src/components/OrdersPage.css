@@ -1,0 +1,182 @@
+.ordersContainer{
+display: flex;
+flex-direction: column;
+width: 80%;
+margin: auto;
+padding: 30px 0px;
+gap: 25px;
+    border-radius: 15px;
+    background-color: rgba(236, 242, 255, 1);
+
+}
+
+.ordersContainer>h2{
+    font-size: 30px;
+    font-weight: 600;
+    padding-left: 30px;
+    display: flex;
+    align-items: center;
+gap: 10px;
+}
+
+.ordersContainer>h2>a>img{
+    width: 27px;
+}
+
+.ordersContainer>span{
+        padding-left: 40px;
+
+}
+
+.orderItem{
+    display: flex;
+    border: 1px solid rgba(0, 0, 0, 0.144);
+    justify-content: space-between;
+    padding: 20px;
+    width: 90%;
+    margin: auto;
+    border-radius: 15px;
+        background-color: white;
+align-items: center;
+}
+
+.orderItem>img{
+    width: 15%;
+border-radius: 8px;
+height: calc(10/100 * 100vw);
+border: 1px solid rgb(205, 206, 206);
+padding: 2px;
+}
+
+.orderItem-info{
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.orderItem-info>div>div{
+display: flex;
+justify-content: space-between;
+    display: flex;
+    align-items: center;
+
+}
+
+.orderItem-info>div{
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+}
+
+.orderItem-name{
+    width: 80%;
+    font-size: 20px;
+    height: 30px;
+    color: solid black;
+    font-weight: 600;
+             white-space: nowrap;    
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+}
+
+.orderItem-refer{
+            font-weight: 600;
+color: rgba(0, 0, 0, 0.521);
+
+}
+
+.orderItem-date{
+        font-weight: 700;
+}
+
+.seeDetail-btn{
+    font-weight: 700;
+            color:rgba(38, 24, 112, 1);
+            cursor: pointer;
+
+}
+
+@media only screen and (max-width: 1023px) {
+        .orderItem-name{
+        font-size: 16px;
+        }
+            .ordersContainer{
+        width: 95%; 
+    }
+    .orderItem-date{
+        font-size: 14px;
+}
+
+.orderItem-refer{
+    font-size: 12px;
+}
+
+    .orderItem-info>div{
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.seeDetail-btn{
+    font-size: 16px;
+}
+
+.orderItem>img{
+    width: 18%;
+    height: calc(12/100 * 100vw);
+
+}
+
+.orderItem{
+    padding: 15px;
+}
+
+
+}
+
+
+@media only screen and (max-width: 668px) {
+    .ordersContainer{
+        width: 95%; 
+    }
+    .orderItem-name{
+        font-size: 12px;
+        width: 68%;
+        height: 20px;
+         white-space: nowrap;    
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .orderItem-date{
+        font-size: 10px;
+}
+
+.orderItem-refer{
+    font-size: 10px;
+}
+
+    .orderItem-info>div{
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.seeDetail-btn{
+    font-size: 10px;
+}
+
+.orderItem>img{
+    width: 18%;
+    height: calc(12/100 * 100vw);
+
+}
+
+.orderItem{
+    padding: 15px;
+}
+
+}
+

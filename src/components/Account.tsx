@@ -20,7 +20,10 @@ interface Props {
     address: string;
     country: string;
     state: string;
+    postalCode: string;
     city: string;
+    wallet_amt: number;
+    wishlist: string[];
   };
 
 type Details = {
@@ -32,14 +35,18 @@ type Details = {
   country: string;
   state: string;
   city: string;
-  dob: string; 
+  dob: string;
   email: string;
   password: string;
+  wallet_amt: number;
+  wishlist: number[];
 };
 
 const Account =(props:Props)=>{
           const { data } = props;
-          const [customerDetails] = data;
+            const [touched, setTouched] = useState(false);
+            const [customerDetails] = data;
+              const [passVisible, setPassVisible] = useState(false);
         const navigate = useNavigate();
  const [Details, setDetails] = useState<Details>({
    firstName: " ",
@@ -50,11 +57,14 @@ const Account =(props:Props)=>{
    country: " ",
    state: " ",
    city: " ",
-   dob:new Date().toISOString(), // Example date format
+   dob: new Date().toISOString(), // Example date format
    email: " ",
    password: " ",
+   wallet_amt: 0,
+   wishlist: [0],
  });
 
+const regex = /^(?=.*[a-zA-Z])(?=.*[0-9]).+$/;
 
 
 const Register = () => {
@@ -70,8 +80,12 @@ console.log("Submitting details:", JSON.stringify(Details));  // Check that all 
     Details.city &&
     Details.dob &&
     Details.email &&
-    Details.password
-  ) {
+    Details.password &&
+    Details.password.length > 7 
+  &&
+    regex.test(Details.password)
+ )
+  {
     fetch("https://pretiosusapi.gibsonline.com/api/Customers", {
       method: "POST",
       headers: {
@@ -95,6 +109,9 @@ console.log("Submitting details:", JSON.stringify(Details));  // Check that all 
         console.error("Error sending info:", error);
       });
   } else {
+    setTouched(true)
+    console.log(regex.test(Details.password));
+    
     console.log("Please fill out all required fields.");
   }
 };    return (
@@ -251,14 +268,27 @@ console.log("Submitting details:", JSON.stringify(Details));  // Check that all 
               onChange={(e) =>
                 setDetails({ ...Details, password: e.target.value })
               }
-              type="password"
+              type={passVisible ? "text" : "password"}
               id="formInput"
               name="password"
               placeholder="Password"
               required
             />
+            &nbsp; {passVisible? <img src="\src\assets\visibility_24dp_000000_FILL0_wght400_GRAD0_opsz24.png" className="visibilityIcon" alt="" onClick={()=>{setPassVisible(false)}} /> : <img src="\src\assets\visibility_off_24dp_000000_FILL0_wght400_GRAD0_opsz24.png" alt="" className="visibilityIcon" onClick={()=>{setPassVisible(true)}} />}
           </div>
-          {!Details.password && <span>Field must be field in</span>}
+          {!Details.password && (
+            <span>
+              Field must be field in<br></br>
+            </span>
+          )}
+          {touched && Details.password.length < 8 && (
+            <span>
+              Password must have more than 7 characters<br></br>
+            </span>
+          )}
+          {touched && regex.test(Details.password) !== true && (
+            <span>Password must contain letters and numbers</span>
+          )}
           <h2 className="Text2">
             I already have an account
             <Link to={"/Login"}>
@@ -294,6 +324,7 @@ console.log("Submitting details:", JSON.stringify(Details));  // Check that all 
           </div>
         </form>
       </div>
+      
     </div>
     <Footer data={[customerDetails]} />
   </>
@@ -301,4 +332,3 @@ console.log("Submitting details:", JSON.stringify(Details));  // Check that all 
 };
 
 export default Account;
-5

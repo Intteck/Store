@@ -12,6 +12,26 @@
   gap: 20px;
 }
 
+.heartBtn{
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
+
+.product-details > h4{
+  height: 25px;
+             white-space: nowrap;    
+        overflow: hidden;
+        text-overflow: ellipsis;
+}
+
+.product-details > span{
+  height: 20px;
+    white-space: nowrap;    
+        overflow: hidden;
+        text-overflow: ellipsis;
+}
+
 .selected-product-details > div > b {
   font-size: 24px;
   font-size: 800;

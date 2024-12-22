@@ -1,6 +1,6 @@
 .cart-details{
     display: grid;
-    grid-template-columns: 15% 40% auto auto auto 15%;
+    grid-template-columns: 15% 40% auto auto auto 7.5% 7.5%;
     gap: 20px 0px;
 width: 60%;
 align-items: center;
@@ -16,6 +16,12 @@ align-items: center;
     margin-bottom:30px;
 
 }
+
+.heartBtn-s{
+    cursor: pointer;
+width: 25px;
+}
+
 .cart-item-icon{
     width: 80%;
 border-radius: 8px;
@@ -184,6 +190,39 @@ cursor: pointer;
     
 }
 
+.deletePopup{
+       display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.moneyBox-container>p{
+    display: flex;
+    justify-content:right;
+}
+
+.deletePopup>button{
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 30px;
+      box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.178);
+      width: 45%;
+      margin: auto;
+      border: none;
+    border-radius: 10px;
+    color: black;
+    font-weight: 700;
+    background-color: white;
+    text-align: center;
+    font-size: 14px;
+}
+
+.deletePopup>button:hover{
+    background-color:rgb(112, 101, 156);
+        color: white;
+        cursor: pointer;
+}
 
 
 .installment-info>button:hover{
@@ -191,36 +230,44 @@ cursor: pointer;
     color: white;
     cursor: pointer;
 }
-@media only screen and (max-width: 668px) {
-    .cart-details{
-    font-size: 10px;
-    }
-    .cart-totals-container{
-    font-size: 10px;
-}
-.cart-total-buttons>button{
-    font-size: 10px;
-}
-.cart-total-buttons>a>button{
-        font-size: 10px;
-
-}
-
-.cart-total{
-    color:rgb(39, 24, 112);
- font-weight: 700;
- font-size: 13px;
-}
-
-
-}
 
 @media only screen and (max-width: 1023px) {
 .cart-details{
     width: 100%;
-        grid-template-columns: 15% 32% auto auto auto 15%;
+        grid-template-columns: 15% 32% auto auto auto 7.5% 7.5%;
 
 }
+.heartBtn-s{
+width: 18px;
+}
+
+.moneyBox-container>h3{
+    font-size: 18px;
+}
+
+.deletePopup>button{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 20px;
+      box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.178);
+      width: 70%;
+      margin: auto;
+      border: none;
+    border-radius: 10px;
+    color: black;
+    font-weight: 700;
+    background-color: white;
+    text-align: center;
+    font-size: 12px;
+}
+
+.deletePopup>button:hover{
+    background-color:rgb(112, 101, 156);
+        color: white;
+        cursor: pointer;
+}
+
 
 .installment-info{
     position: fixed;
@@ -332,6 +379,70 @@ height: 100%;
         cursor: pointer;
         width: 15px;
 }
+
+
+}
+
+@media only screen and (max-width: 668px) {
+    .cart-details{
+    font-size: 10px;
+    }
+    .cart-totals-container{
+    font-size: 10px;
+}
+.cart-total-buttons>button{
+    font-size: 10px;
+}
+.cart-total-buttons>a>button{
+        font-size: 10px;
+
+}
+.cart-details{
+    width: 100%;
+        grid-template-columns: 15% 32% auto auto auto 7.5% 7.5%;
+
+}
+
+
+.cart-total{
+    color:rgb(39, 24, 112);
+ font-weight: 700;
+ font-size: 13px;
+}
+
+.moneyBox-container>h3{
+    font-size: 14px;
+}
+
+
+.deletePopup>button{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 15px;
+      box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.178);
+      width: 70%;
+      margin: auto;
+      border: none;
+    border-radius: 10px;
+    color: black;
+    font-weight: 700;
+    background-color: white;
+    text-align: center;
+    font-size: 10px;
+}
+
+.deletePopup>button>img{
+    width: 15px;
+}
+
+.deletePopup>button:hover{
+    background-color:rgb(112, 101, 156);
+        color: white;
+        cursor: pointer;
+}
+
+
 
 
 }

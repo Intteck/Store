@@ -13,6 +13,12 @@ import Account from "./components/Account";
 import Login from "./components/Login";
 import About from "./components/About";
 import Contact from "./components/Contact";
+import OrdersPage from "./components/OrdersPage";
+import Term from "./components/Term";
+import Cookies from "js-cookie";
+import Wishlist from "./components/Wishlish";
+import Recovery from "./components/Recovery";
+import Membership from "./components/Membership";
 
 
 type ProductItem = {
@@ -22,19 +28,23 @@ type ProductItem = {
   image_URL: string;
   product_Type: productType[];
   price: number;
+  suppliers: [];
 };
 
-type Details = {
+type CustomerDetails = {
   id: number;
   first_name: string;
   last_name: string;
   dob: string;
   email: string;
+  postalCode: string;
   phone_number: string;
   address: string;
   country: string;
   state: string;
   city: string;
+  wallet_amt: number;
+  wishlist: string[];
 };
 
  
@@ -54,22 +64,38 @@ type CategoryKey ="Refrigerators" | "Freezers" | "Air Conditioners" | "Washing M
 function App() {
    const location = useLocation();
    const [cart, setCartItems] = useState<CartItem[]>([]);
-   const [customerDetails, setCustomerDetails] = useState<Details>({
+   const [inCheckout, setInCheckout] = useState(false);
+   const [role, setRole] = useState("");
+   const [customerDetails, setCustomerDetails] = useState<CustomerDetails>({
      id: 0,
      first_name: "",
      last_name: "",
-     dob: new Date().toISOString(),
+     dob: "",
      email: "",
      phone_number: "",
      address: "",
      country: "",
+     postalCode: "",
      state: "",
      city: "",
+     wallet_amt: 0,
+     wishlist : [''],
+
    });
 
    useEffect(() => {
      window.scrollTo(0, 0);
    }, [location]);
+
+   useEffect(()=>{
+   if (
+     Cookies.get("customerDetails") !== undefined &&
+     Cookies.get("customerRole") !== undefined
+   ) {
+     setCustomerDetails(JSON.parse(Cookies.get("customerDetails")!));
+     setRole(JSON.parse(Cookies.get("customerRole")!));
+   }
+   },[])
 
   const {
     data: Products,
@@ -81,6 +107,8 @@ function App() {
       "Content-Type": "application/json",
     },
   });
+
+  
 
 
  const categoriesNames: CategoryKey[] = [
@@ -103,47 +131,148 @@ function App() {
        <div>
          <Routes>
            <Route path="/" element={<Startpage />} />
-           <Route path="/Login" element={<Login data={[setCustomerDetails]} />} />
-           <Route path="/Account" element={<Account data={[customerDetails]}  />} />
-           <Route path="/Profile" element={<Profile data={[customerDetails]} />} />
-           <Route path="/About" element={<About data={[customerDetails]}  />} />
-           <Route path="/Contact" element={<Contact data={[customerDetails]} />} />
+           <Route path="/Recovery" element={<Recovery />} />
+
+           <Route
+             path="/Login"
+             element={
+               <Login
+                 data={[setCustomerDetails,setRole, setInCheckout, inCheckout]}
+               />
+             }
+           />
+           <Route
+             path="/Account"
+             element={<Account data={[customerDetails]} />}
+           />
+           <Route
+             path="/Profile"
+             element={
+               <Profile
+                 data={[customerDetails, Products, setCustomerDetails, role]}
+               />
+             }
+           />
+           <Route
+             path="/Terms and Conditions"
+             element={<Term data={[customerDetails, Products]} />}
+           />
+           <Route
+             path="/About"
+             element={<About data={[customerDetails, Products]} />}
+           />
+           <Route
+             path="/Contact"
+             element={<Contact data={[customerDetails, Products]} />}
+           />
+           <Route
+             path="/Contact"
+             element={<Contact data={[customerDetails, Products]} />}
+           />
+
+           <Route
+             path="/Membership"
+             element={<Membership data={[customerDetails, Products]} />}
+           />
+           <Route
+             path="/Orders"
+             element={<OrdersPage data={[customerDetails, Products]} />}
+           />
+
+           <Route
+             path="/Orders/:orderId"
+             element={<OrdersPage data={[customerDetails, Products]} />}
+           />
+           <Route
+             path="/Wishlist"
+             element={
+               <Wishlist data={[customerDetails, Products, isPending]} />
+             }
+           />
 
            <Route
              path="/Home"
              element={
-               <HomePage data={[customerDetails,Products, categoriesNames, isPending]} />
+               <HomePage
+                 data={[customerDetails, Products, categoriesNames, isPending]}
+               />
              }
            />
            <Route
              path="/Search"
              element={
-               <CategoryPage data={[ customerDetails,Products, categoriesNames, isPending]} />
+               <CategoryPage
+                 data={[customerDetails, Products, categoriesNames, isPending]}
+               />
              }
            />
            <Route
              path="/Product/:id"
              element={
-               <ProductPage data={[customerDetails,Products, isPending, cart, setCartItems]} />
+               <ProductPage
+                 data={[
+                   customerDetails,
+                   Products,
+                   isPending,
+                   cart,
+                   setCartItems,
+                   setCustomerDetails,
+                 ]}
+               />
              }
            />
            <Route
              path="/Product"
              element={
-               <ProductPage data={[customerDetails,Products, isPending, cart, setCartItems]} />
+               <ProductPage
+                 data={[
+                   customerDetails,
+                   Products,
+                   isPending,
+                   cart,
+                   setCartItems,
+                   setCustomerDetails,
+                 ]}
+               />
              }
            />
            <Route
              path="/Cart"
              element={
-               <CartPage data={[customerDetails,Products, isPending, cart, setCartItems]} />
+               <CartPage
+                 data={[
+                   customerDetails,
+                   Products,
+                   isPending,
+                   cart,
+                   setCartItems,
+                   setInCheckout,
+                   setCustomerDetails,
+                 ]}
+               />
              }
            />
-           <Route path="/Checkout" element={<CheckoutPage data={[Products, isPending,customerDetails, cart, setCartItems]} />} />
+           <Route
+             path="/Checkout"
+             element={
+               <CheckoutPage
+                 data={[
+                   Products,
+                   isPending,
+                   customerDetails,
+                   cart,
+                   setCartItems,
+                   setCustomerDetails,
+                 ]}
+               />
+             }
+           />
            <Route
              path="/categories/:category"
              element={
-               <CategoryPage data={[customerDetails,Products, categoriesNames, isPending]} />
+               <CategoryPage
+                 data={[customerDetails, Products, categoriesNames, isPending]}
+               />
              }
            />
          </Routes>

@@ -7,11 +7,12 @@
 
   interface productProps {
     data: [
-          customerDetails: CustomerDetails,
+      customerDetails: CustomerDetails,
       Products: ProductItem[] | null,
       isPending: boolean,
       cart: CartItem[],
-      setCartItem: React.Dispatch<React.SetStateAction<CartItem[]>>
+      setCartItem: React.Dispatch<React.SetStateAction<CartItem[]>>,
+      setCustomerDetails: React.Dispatch<React.SetStateAction<CustomerDetails>>
     ];
   }
 
@@ -22,6 +23,7 @@
     image_URL: string;
     product_Type: productType[];
     price: number;
+    suppliers: [];
   };
 
   type CartItem ={
@@ -40,45 +42,153 @@ type CustomerDetails = {
   first_name: string;
   last_name: string;
   dob: string;
+  postalCode: string;
   email: string;
   phone_number: string;
   address: string;
   country: string;
   state: string;
   city: string;
+  wallet_amt: number;
+  wishlist: string[];
 };
 
 
   const ProductPage = (props: productProps) => {
-    const [heart,setHeart] = useState(true);
       const [count,setCount] = useState(1);
     const { data } = props;
     const formatter = new Intl.NumberFormat("en-US");
-  const [customerDetails, Products, isPending, cart, setCartItems] = data;
+  const [customerDetails, Products, isPending, cart, setCartItems, setCustomerDetails] = data;
   const [page,setPage] = useState(1);
   const [section,setSection] = useState(1);
+  const [wishlist,setWishlist]  = useState(customerDetails.wishlist);
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    const savedCartItems = Cookies.get("cartItems"+customerDetails.id);
-    if (savedCartItems) {
-      setCartItems(JSON.parse(savedCartItems));
+    if (customerDetails.id === 0) {
+      if (Cookies.get("cartItems") !== undefined) {
+        const savedCartItems = JSON.parse(Cookies.get("cartItems")!);
+        setCartItems(savedCartItems);
+        console.log(savedCartItems);
+      }
+    } else {
+      if (
+        Cookies.get("cartItems") !== undefined &&
+        Cookies.get("cartItems" + customerDetails.id) !== undefined
+      ) {
+        const customerCartItems = JSON.parse(
+          Cookies.get("cartItems" + customerDetails.id)!
+        );
+        const generalCartItems = JSON.parse(Cookies.get("cartItems")!);
+        const savedCartItems = customerCartItems.concat(generalCartItems);
+        setCartItems(savedCartItems);
+        Cookies.set(
+          "cartItems" + customerDetails.id,
+          JSON.stringify(savedCartItems),
+          {
+            expires: 30,
+          }
+        );
+        Cookies.remove("cartItems");
+      } else if (Cookies.get("cartItems") !== undefined) {
+        const customerCartItems = JSON.parse(Cookies.get("cartItems")!);
+        setCartItems(customerCartItems);
+      } else if (Cookies.get("cartItems" + customerDetails.id) !== undefined) {
+        const customerCartItems = JSON.parse(
+          Cookies.get("cartItems" + customerDetails.id)!
+        );
+        setCartItems(customerCartItems);
+      }
     }
-  }, []);
+  }, [Products]);
 
+
+
+
+
+const addToWishlist = (cartIn: boolean) =>{
+  let updatedBody =[''];
+if (cartIn === true && !customerDetails.wishlist.includes(String(selectedItem.id))){ 
+ updatedBody = [...customerDetails.wishlist, String(selectedItem.id)];
+   setWishlist(updatedBody);
+   console.log(cartIn);
+   
+} 
+else
+{
+  updatedBody = customerDetails.wishlist.filter((wish)=>{
+return wish !== String(selectedItem.id)
+  })
+  console.log("removed"+updatedBody);
+     console.log(cartIn);
+
+  
+  setWishlist(updatedBody);
+}
+console.log("proccess sdtarted");
+     fetch(
+       "https://pretiosusapi.gibsonline.com/api/Customers/" +
+         customerDetails.id,
+       {
+         method: "PATCH",
+         headers: {
+           "Content-Type": "application/json",
+         },
+         body: JSON.stringify({
+           ...customerDetails,
+           wishlist: updatedBody,
+         }),
+       }
+     )
+       .then((response) => {
+         if (!response.ok) {
+           return response.json().then((error) => {
+             throw new Error(`Failed to send details. ${error.message}`);
+           });
+         }
+       })
+       .then((data) => {
+         Cookies.set(
+           "customerDetails",
+           JSON.stringify({
+             ...customerDetails,
+             wishlist: updatedBody,
+           }),
+           {
+             expires: 7,
+           }
+         );
+         setCustomerDetails({
+           ...customerDetails,
+           wishlist: updatedBody,
+         });
+         console.log("Data has been sent", data);
+       })
+       .catch((error) => {
+         console.error("Error sending info:", error);
+       });
+}
 
   const addToCart = () => {
     if(!cart.some((obj) => obj.id === selectedItem.id)){    
     const item = {id:selectedItem.id, count: count}
     const updatedCartItems = [...cart, item];
     setCartItems(updatedCartItems);
+        addToWishlist(false);
 
-    Cookies.set("cartItems"+customerDetails.id, JSON.stringify(updatedCartItems), { expires: 30 });}
-    else
-    console.log(Cookies.get("cartItems" + customerDetails.id));
-    
-  };
+
+    if(customerDetails.id !== 0){
+    Cookies.set("cartItems"+customerDetails.id, JSON.stringify(updatedCartItems), { expires: 30 });
+  }
+    else{
+     Cookies.set("cartItems", JSON.stringify(updatedCartItems), { expires: 30 });
+    }
+  }
+}
+
+
+
 
 
   const { id } = useParams();
@@ -86,7 +196,7 @@ type CustomerDetails = {
     if (id === undefined)
     return (
       <>
-        <Nav data={[customerDetails]} />
+        <Nav data={[customerDetails, Products]} />
         <div className="content">
           <div className="mobile-section-container">
             {isPending && (
@@ -117,13 +227,9 @@ type CustomerDetails = {
                       />
                     </div>
                     <div className="product-details">
-                      <h4 className="mobile">{item.name.slice(0, 15)}...</h4>
-                      <h4 className="pc">{item.name.slice(0, 25)}...</h4>
-                      <span className="mobile">
-                        {item.description.slice(0, 23)}...
-                      </span>
-                      <span className="pc">
-                        {item.description.slice(0, 40)}...
+                      <h4>{item.name}</h4>
+                      <span>
+                        {item.description}
                       </span>
                       <b>&#8358;{formatter.format(Number(item.price))}</b>
                     </div>
@@ -176,7 +282,7 @@ type CustomerDetails = {
                 className={page === section + 2 ? "active" : ""}
                 style={{
                   display:
-                    section === Math.floor(Products.length / 20)
+                    section + 2 > Math.ceil(Products.length / 20)
                       ? "none"
                       : "inline",
                 }}
@@ -192,8 +298,7 @@ type CustomerDetails = {
               <button
                 style={{
                   display:
-                    Math.floor(Products.length / 20) === section ||
-                    Math.floor(Products.length / 20) <= 0
+                    section >= Math.floor(Products.length / 20)
                       ? "none"
                       : "inline",
                 }}
@@ -228,7 +333,7 @@ type CustomerDetails = {
       return (
         <>
           <div className="pc">
-            <Nav data={[customerDetails]} />
+            <Nav data={[customerDetails, Products]} />
           </div>
           {isPending && (
             <div className="content">
@@ -281,21 +386,22 @@ type CustomerDetails = {
                       />
                     </div>
                   </div>
-                  <div className="selected-product-delivery">
+                  {/*                   <div className="selected-product-delivery">
                     <h2>Delivery</h2>
                     <div className="delivery-type">
                       <div>
                         Standard<span>5-7 days</span>
                       </div>
-                      <b>$3.00</b>
+                      <b></b>
                     </div>
                     <div className="delivery-type">
                       <div>
                         Express<span>1-2 days</span>
                       </div>
-                      <b>$12.00</b>
+                      <b></b>
                     </div>
                   </div>
+ */}{" "}
                 </div>
 
                 <div className="selected-product-details-pc">
@@ -333,7 +439,11 @@ type CustomerDetails = {
                             +
                           </span>
                         </span>
-                        <button onClick={addToCart}>
+                        <button
+                          onClick={() => {
+                            addToCart();
+                          }}
+                        >
                           {Products && (
                             <>
                               {cart.some(
@@ -349,6 +459,19 @@ type CustomerDetails = {
                             </>
                           )}
                         </button>
+
+                        {!cart.some((obj) => obj.id === selectedItem.id) && <img
+                          src={
+                            wishlist.includes(String(selectedItem.id))
+                              ? "/src/assets/Path 337.png"
+                              : "/src/assets/heartlikw.png"
+                          }
+                          className="heartBtn"
+                          onClick={() => {
+                            addToWishlist(true);
+                          }}
+                          alt=""
+                        />}
                       </div>
                     </div>
                   </div>
@@ -394,18 +517,8 @@ type CustomerDetails = {
                                 />
                               </div>
                               <div className="product-details">
-                                <h4 className="mobile">
-                                  {item.name.slice(0, 15)}...
-                                </h4>
-                                <h4 className="pc">
-                                  {item.name.slice(0, 25)}...
-                                </h4>
-                                <span className="mobile">
-                                  {item.description.slice(0, 23)}...
-                                </span>
-                                <span className="pc">
-                                  {item.description.slice(0, 40)}...
-                                </span>
+                                <h4>{item.name}</h4>
+                                <span>{item.description}</span>
                                 <b>
                                   &#8358;{formatter.format(Number(item.price))}
                                 </b>
@@ -423,33 +536,45 @@ type CustomerDetails = {
               </div>
             </>
           )}
-          <footer className="productpage-footer">
-            <img
-              src={
-                heart ? "/src/assets/Path 337.png" : "/src/assets/heartlikw.png"
-              }
-              className="heartBtn"
-              onClick={() => {
-                setHeart(!heart);
-              }}
-              alt=""
-            />
-            <button className="addCart" onClick={addToCart}>
-              {Products && (
-                <>
-                  {cart.some((obj) => obj.id === selectedItem.id) ? (
-                    <img
-                      src="\src\assets\check_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png"
-                      style={{ width: "40px" }}
-                    />
-                  ) : (
-                    "Add to cart"
-                  )}
-                </>
-              )}
-            </button>
-            <button className="buyNow" onClick={()=>{addToCart(); navigate("/cart")}}>Buy now</button>
-          </footer>
+          {Products && (
+            <footer className="productpage-footer">
+              {!cart.some((obj) => obj.id === selectedItem.id) && <img
+                src={
+                  wishlist.includes(String(selectedItem.id))
+                    ? "/src/assets/Path 337.png"
+                    : "/src/assets/heartlikw.png"
+                }
+                className="heartBtn"
+                onClick={() => {
+                  addToWishlist(true);
+                }}
+                alt=""
+              />}
+              <button className="addCart" onClick={addToCart}>
+                {Products && (
+                  <>
+                    {cart.some((obj) => obj.id === selectedItem.id) ? (
+                      <img
+                        src="\src\assets\check_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png"
+                        style={{ width: "40px" }}
+                      />
+                    ) : (
+                      "Add to cart"
+                    )}
+                  </>
+                )}
+              </button>
+              <button
+                className="buyNow"
+                onClick={() => {
+                  addToCart();
+                  navigate("/cart");
+                }}
+              >
+                Buy now
+              </button>
+            </footer>
+          )}
           <Footer data={[customerDetails]} />
         </>
       );

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./HomePage.css";
 import { Link} from "react-router-dom";
 import Nav from "./Nav";
@@ -24,6 +24,7 @@ type ProductItem = {
   image_URL: string;
   product_Type: productType[];
   price: number;
+  suppliers: [];
 };
 
 type CustomerDetails = {
@@ -36,7 +37,10 @@ type CustomerDetails = {
   address: string;
   country: string;
   state: string;
+  postalCode: string;
   city: string;
+  wallet_amt: number;
+  wishlist: string[];
 };
 
 
@@ -52,7 +56,7 @@ const HomePage = (props: homeProps) => {
   const formatter = new Intl.NumberFormat("en-US");
 const {data} = props;
 const [customerDetails, Products, categoriesNames, isPending] = data;
-                  var random = 0;
+  var random = 0;
 
                   if (Products) {
                     random = Math.floor(
@@ -60,16 +64,24 @@ const [customerDetails, Products, categoriesNames, isPending] = data;
                     );
                   }
 
+  const [alertSlide, setSlide] = useState(1);
+useEffect(() => {
+  const interval = setInterval(() => {
+    setSlide((prevState) => (prevState === 1 ? 2 : 1));
+  }, 5000); // 3000 milliseconds = 3 seconds
 
+  // Cleanup to avoid memory leaks
+  return () => clearInterval(interval);
+}, []);
   return (
     <>
-      <Nav data={[customerDetails]} />
+      <Nav data={[customerDetails, Products]} />
       <div>
         <div className="Hero-image pc">
           <div
-            className="update-alert"
-            data-aos="fade-up"
-            data-aos-duration="1000"
+            className={
+              alertSlide === 1 ? "update-alert" : "update-alert active"
+            }
           >
             <span>New Arrival</span>
             <h1>
@@ -80,28 +92,45 @@ const [customerDetails, Products, categoriesNames, isPending] = data;
               <button>Buy Now</button>
             </Link>
           </div>
+          <div
+            className={
+              alertSlide === 2 ? "update-alert" : "update-alert active"
+            }
+          >
+            <span>Exclusive Offer</span>
+            <h1>
+              Become a <br />
+              Vendor Today
+            </h1>
+            <span>Join now and enjoy exclusive benefits and discounts!</span>
+            <Link to={"/Membership"}>
+              <button>Join Now</button>
+            </Link>
+          </div>{" "}
         </div>
-        <section className="content align">
-          <div className="swiper-container">
-            <Swiper
-              className="Hero-slideshow"
-              spaceBetween={0}
-              slidesPerView={1}
-              pagination={{ clickable: true }}
-              autoplay={{ delay: 5000, disableOnInteraction: false }}
-              speed={1000}
-              modules={[Pagination, Autoplay]}
-              onSwiper={(swiper: any) => console.log(swiper)}
-              onSlideChange={() => console.log("slide change")}
-            >
-              {Array.from({ length: 4 }).map((_, index) => (
-                <SwiperSlide className={"slide"+(index+1)}>
-                  <img src={"https://pretiosusadmin.gibsonline.com/Product_Images/banner/"+(index+1)+".jpg"} alt="" />
-                </SwiperSlide>
-              ))}
-            </Swiper>
-          </div>
-
+        <div className="swiper-container">
+          <Swiper
+            className="Hero-slideshow"
+            spaceBetween={0}
+            slidesPerView={1}
+            pagination={{ clickable: true }}
+            autoplay={{ delay: 5000, disableOnInteraction: false }}
+            speed={1000}
+            modules={[Pagination, Autoplay]}
+            onSwiper={(swiper: any) => console.log(swiper)}
+            onSlideChange={() => console.log("slide change")}
+          >
+            {Array.from({ length: 4 }).map((_, index) => (
+              <SwiperSlide key={index} className={"slide" + (index + 1)}>
+                <img
+                  src={"src/assets/Banner (" + (index + 1) + ").png"}
+                  alt=""
+                />
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </div>
+        <section className="Homecontent align">
           <div className="mobile-section-header">
             <h3>Categories</h3>
             <div>
@@ -195,14 +224,8 @@ const [customerDetails, Products, categoriesNames, isPending] = data;
                     />
                   </div>
                   <div className="product-details">
-                    <h4 className="mobile">{item.name.slice(0, 15)}...</h4>
-                    <h4 className="pc">{item.name.slice(0, 25)}...</h4>
-                    <span className="mobile">
-                      {item.description.slice(0, 23)}...
-                    </span>
-                    <span className="pc">
-                      {item.description.slice(0, 40)}...
-                    </span>
+                    <h4>{item.name}</h4>
+                    <span>{item.description}</span>
                     <b>&#8358;{formatter.format(Number(item.price))}</b>
                   </div>
                 </Link>

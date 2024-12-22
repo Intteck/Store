@@ -4,9 +4,28 @@ import Nav from "./Nav";
 import "./Contact.css";
 interface Props {
   data: [
-    customerDetails: CustomerDetails
-  ];
-}
+    customerDetails: CustomerDetails,
+    Products: ProductItem[] | null];
+ }
+
+
+ type ProductItem = {
+   id: number;
+   name: string;
+   description: string;
+   image_URL: string;
+   product_Type: productType[];
+   price: number;
+   suppliers: [];
+ };
+
+  type productType = {
+    id: number;
+    name: string;
+    description: string;
+  };
+
+
 
 type CustomerDetails = {
   id: number;
@@ -17,19 +36,22 @@ type CustomerDetails = {
   phone_number: string;
   address: string;
   country: string;
+  postalCode: string;
   state: string;
   city: string;
+  wallet_amt: number;
+  wishlist: string[];
 };
 
 
 
 const Contact = (props:Props) => {
           const { data } = props;
-        const [customerDetails] = data;
+        const [customerDetails,Products] = data;
 
     return (
       <>
-        <Nav data={[customerDetails]} />
+        <Nav data={[customerDetails, Products]} />
         <div className="contact-container">
           <h1
             className="contact-header"
@@ -88,6 +110,7 @@ const Contact = (props:Props) => {
               </button>
             </div>
           </form>
+
         </div>
         <Footer data={[customerDetails]} />
       </>

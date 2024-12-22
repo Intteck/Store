@@ -12,6 +12,13 @@ text-align: center;
 width: 60%;*/
 opacity: 0.9;
 }
+
+.visibilityIcon{
+    cursor: pointer;
+width: 20px;
+height: 20px;
+}
+
 .Text2 {
     color: #202020;
 
@@ -28,6 +35,30 @@ text-align: center;
 height: 30px;
 flex-shrink: 0; 
 }
+
+
+.recoveryPage{
+    display: flex;
+    flex-direction: column;
+    gap: 0px;
+    align-items: center;
+    justify-content: center;
+height: 80vh;
+width: 100vw;
+padding: 15px;
+}
+
+.Text3{
+    text-align: right;
+    padding: 5px;
+    color: #261870;
+    cursor: pointer;
+}
+
+.Text3:hover{
+color: rgb(211, 24, 24);
+}
+
 
 .text3 {
     color: #F3F3F3;
@@ -53,11 +84,16 @@ line-height: 31px; /* 140.909% */
     color: white;
 
 }
+
+.recoveryPage>img{
+    width: 250px;
+}
+
 #formInput {
-    
     display: flex;
-    width: 100%;
+    width: 90%;
     height: 5%;
+    margin-left: 5%;
     padding: 15.811px 19.764px;
     align-items: center;
     gap: 9.882px;

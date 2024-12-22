@@ -5,8 +5,27 @@ import Footer from "./Footer";
 import Nav from "./Nav";
 
  interface Props {
-   data: [customerDetails: CustomerDetails];
+   data: [customerDetails: CustomerDetails, 
+    Products: ProductItem[] | null];
  }
+
+
+ type ProductItem = {
+   id: number;
+   name: string;
+   description: string;
+   image_URL: string;
+   product_Type: productType[];
+   price: number;
+   suppliers: [];
+ };
+
+ type productType = {
+   id: number;
+   name: string;
+   description: string;
+ };
+
 
  type CustomerDetails = {
    id: number;
@@ -16,19 +35,22 @@ import Nav from "./Nav";
    email: string;
    phone_number: string;
    address: string;
+   postalCode: string;
    country: string;
    state: string;
    city: string;
+   wallet_amt: number;
+   wishlist: string[];
  };
 
 
 const About = (props: Props) => {
         const { data } = props;
-        const [customerDetails] = data; 
+        const [customerDetails,Products] = data; 
 
   return (
     <>
-      <Nav data={[customerDetails]} />
+      <Nav data={[customerDetails,Products]} />
       <div className="About-container">
         <Link
           to={"/Home"}
@@ -36,7 +58,7 @@ const About = (props: Props) => {
           data-aos-duration="2000"
           data-aos-delay="600"
         >
-          <img src="src\assets\Pretiosus 1.png" alt="" />
+          <img src="src\assets\Preak Mart.jpg" alt="" />
         </Link>
         <h1
           className="About-header"
@@ -49,7 +71,7 @@ const About = (props: Props) => {
           Be the driving force behind innovative product experiences that not
           only meet customer needs but exceed expectations. Transform market
           opportunities into sustained growth and long-term customer loyalty.
-          Take charge of your finances today! Visit the Pretiosus app (web or
+          Take charge of your finances today! Visit the Preak Mart app (web or
           mobile) to explore our wide range of products. Find your desired item,
           check its properties, and start planning your installment now.
         </p>
@@ -105,7 +127,7 @@ const About = (props: Props) => {
               <h4 className="option-header">Our Mail</h4>
               <p className="option-text">
                 Your also mail us{" "}
-                <a href="mailto:info@pretiosus.ng">info@pretiosus.ng</a>
+                <a href="mailto:info@preakmart.ng">info@PreakMart.ng</a>
               </p>
             </span>
           </div>

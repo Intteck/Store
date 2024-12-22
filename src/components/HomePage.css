@@ -5,6 +5,12 @@
     padding: 10px;
 }
 
+.Homecontent{
+    margin-bottom: 80px;
+  min-height: 53vh;
+
+}
+
 .mobile-section-header>div{
     display: flex;
     align-items: center;
@@ -90,11 +96,12 @@ background: rgba(38, 24, 112, 1);
 .mobile-product-card{
     display: flex;
     flex-direction: column;
-        gap: 5px;
-        text-decoration: none;
+            text-decoration: none;
         color: black;
       width: 48%;  
-height: calc(65/100*100vw);
+    height: calc(75/100 *100vw);
+    max-width: 237px;
+    max-height: 400px;
 }
 
 .mobile-product-card:hover{
@@ -107,7 +114,7 @@ height: calc(65/100*100vw);
     padding: 5px;
     border-radius: 8px;
       box-shadow: 0px 5px 6px rgba(0, 0, 0, 0.096);
-      height: 57%;   
+      height: 58%;   
 
 }
 
@@ -126,24 +133,24 @@ height: calc(65/100*100vw);
 display: flex;
 flex-direction: column;
 gap: 8px;
-height: 43%;
-padding-bottom: 20px;
+height: fit-content;
+padding-bottom: 10px;
 }
 
 .product-details>span{
 font-size: 12px;
-height: 15px;
 }
 
 .swiper-container{
           position: relative;
-    height: calc(50/100 *100vw);
+    height: calc(55/100 *100vw);
+  margin-top: 60px;
+
 
 }
 
 .swiper {
     position: static !important;
-        border-radius: 12px;
         overflow: hidden;
             height: 87%;
 
@@ -256,10 +263,21 @@ background-size: cover;
     position: absolute;
     padding: 50px 30px;
     right: 3%;
-    bottom: 8%;
+    bottom: 0%;
+    opacity: 0;
+    visibility: hidden;
     width: 40%;
     background-color: rgba(236, 242, 255, 1);
     height: 460px;
+transition: 1s ease;
+}
+
+.update-alert.active{
+    visibility: visible;
+        bottom: 8%;
+    opacity: 1;
+transition: 2s ease;
+
 }
 .update-alert>span{
     font-size: 18px;
@@ -271,6 +289,7 @@ background-size: cover;
     color:  rgba(38, 24, 112, 1);;
 }
 .update-alert>a>button{
+cursor: pointer;
     width: 35%;
     padding: 4% 0%;
     border: none;

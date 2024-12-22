@@ -1,56 +1,627 @@
 .Text5 {
-    color: #202020;
+  color: #202020;
 
-    font-family: "Raleway", sans-serif;
-    font-size: 200%;
-font-style: normal;
-font-weight: 700;
-line-height:  128.571% ;
-letter-spacing: -0.28px;
+  font-family: "Raleway", sans-serif;
+  font-size: 200%;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 128.571%;
+  letter-spacing: -0.28px;
 }
 
-.profileContainer{
-    margin-top: 20%;
-    padding-top: 2%;
-    border-radius: 10px;
-    background: #F8F8F8;
-width: 100%;
-height: 70px;
-text-align: center;
-}
-.text6{
-    color: #202020;
- padding-top: 1.5%;
-    font-family: "Raleway", sans-serif;
-font-size: 150%;
-font-style: normal;
-font-weight: 700;
-line-height: 28.571% ;
-letter-spacing: -0.14px;
+.text6 {
+  color: #202020;
+  padding-top: 1.5%;
+  font-family: "Raleway", sans-serif;
+  font-size: 150%;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 28.571%;
+  letter-spacing: -0.14px;
 }
 .Text7 {
-    color: #000;
-    padding-top: 1%;
+  color: #000;
+  padding-top: 1%;
 
-    font-family: "Nunito Sans", sans-serif;
-font-size: 70%;
-font-style: normal;
-font-weight: 400;
-line-height: 15px; /* 150% */
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 70%;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 15px; /* 150% */
 }
 .Text8 {
-    font-family: "Nunito Sans", sans-serif;
+  font-family: "Nunito Sans", sans-serif;
 
-    text-align: center;
-    padding-top: 10%;
-    padding-bottom: 5%;
+  text-align: center;
+  padding-top: 10%;
+  padding-bottom: 5%;
 }
 #doneHistory {
+  display: flex;
+  justify-content: center;
+  margin: auto;
+  padding: 3% 10%;
+  flex-shrink: 0;
+  border-radius: 16px;
+  background: #261870;
+}
+
+.askFor-btn {
+  padding: 20px 30px;
+  color: white;
+  font-size: 18px;
+  border-radius: 16px;
+  margin: 10px;
+  cursor: pointer;
+  background: #261870;
+}
+
+.orders-btn {
+  padding: 20px 30px;
+  color: white;
+  font-size: 18px;
+  border-radius: 16px;
+  margin: 10px;
+  cursor: pointer;
+  background: #261870;
+}
+
+.askFor-container {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  height: fit-content;
+  z-index: 1001;
+  background-color: bisque;
+  padding: 30px 25px;
+  border-radius: 15px;
+  gap: 20px;
+  width: 50%;
+  background-color: rgb(233, 233, 233);
+}
+
+.askFor-container > div {
+  display: flex;
+  flex-direction: column;
+}
+
+.askFor-container > h1 {
+  color: rgba(38, 24, 112, 1);
+  text-align: center;
+}
+
+.askFor-container > div > span {
+  padding: 5px;
+  font-weight: 700;
+}
+
+.askFor-container > div > input {
+  height: 60px;
+  border-radius: 10px;
+  border: transparent;
+  text-indent: 10px;
+  font-size: 20px;
+}
+
+.askFor-container > div > textarea {
+  border-radius: 10px;
+  border: transparent;
+  padding: 20px;
+  font-size: 20px;
+}
+.moneyBox-container {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: fit-content;
+  z-index: 1001;
+  display: flex;
+  background-size: 100%;
+  flex-direction: column;
+  padding: 30px;
+  margin: auto;
+  width: 50%;
+  gap: 10px;
+  border-radius: 15px;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.356);
+  background-color: white;
+}
+
+.profileInfo-container {
+  display: flex;
+  justify-content: center;
+  gap: 50px;
+  background-color: rgba(236, 242, 255, 1);
+  padding-top: 120px;
+  min-height: 63vh;
+  padding-bottom: 100px;
+}
+
+.profileInfo {
+  display: flex;
+  position: relative;
+  background-image: url("/src/assets/doodle.png");
+  background-size: 100%;
+  flex-direction: column;
+  padding: 30px;
+  width: 55%;
+  height: fit-content;
+  gap: 10px;
+  border-radius: 15px;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.356);
+  background-color: white;
+}
+
+.logOutbtn {
+  position: absolute;
+  right: 20px;
+  border-radius: 8px;
+  border: none;
+  background-color: rgba(223, 29, 29, 0.849);
+  font-weight: 600;
+  color: white;
+  cursor: pointer;
+  padding: 15px 20px;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.178);
+}
+
+.logOutbtn:hover {
+  background-color: rgb(104, 12, 12);
+}
+
+.profileInfo > span {
+  padding: 30px;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.178);
+  border-radius: 10px;
+  color: black;
+  font-weight: 600;
+  background-color: white;
+  transition: 0.3s ease;
+}
+
+.askMoney {
+  display: flex;
+  justify-content: space-between;
+}
+.askMoney > span {
+  padding: 30px;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.178);
+  border-radius: 10px;
+  color: black;
+  font-weight: 600;
+  text-align: center;
+  width: 45%;
+  background-color: white;
+  transition: 0.3s ease;
+}
+
+.askMoney > span:hover {
+  background-color: rgb(112, 101, 156);
+  color: white;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.profileInfo > a {
+  padding: 30px;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.178);
+  border-radius: 10px;
+  color: black;
+  font-weight: 600;
+  background-color: white;
+  transition: 0.3s ease;
+}
+
+.profileInfo > span:hover {
+  background-color: rgb(112, 101, 156);
+  color: white;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.profileInfo > a:hover {
+  background-color: rgb(112, 101, 156);
+  color: white;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.profileimg {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.profileimg>h2{
+text-align: center;
+}
+
+.profileInfo > p {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #160761;
+  font-weight: 700;
+  background-color: white;
+  width: fit-content;
+  box-shadow: 0px 5px 5px rgb(255, 255, 255);
+}
+
+.profileInfo > p > img {
+  width: 20px;
+}
+.profileInfo > p > b {
+  color: black;
+}
+
+.moneyBox-container > span {
+  padding: 30px;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.178);
+  border-radius: 10px;
+  color: black;
+  font-weight: 700;
+  background-color: white;
+  text-align: center;
+}
+
+.addWallet {
+  display: flex;
+  justify-content: space-between;
+  padding-left: 25px;
+}
+
+.addWallet > input {
+  width: 45%;
+  border: none;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  background-color: rgb(240, 240, 240);
+  text-indent: 20px;
+  font-size: 20px;
+}
+
+.addWallet > div > img {
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
+.addWallet > div {
+  display: flex;
+  flex-direction: row;
+  width: 50%;
+}
+.addWallet > div > button {
+  padding: 30px;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.178);
+  width: 90%;
+  border: none;
+  border-radius: 10px;
+  color: black;
+  font-weight: 700;
+  background-color: white;
+  text-align: center;
+  font-size: 14px;
+  transition: 0.3s ease;
+}
+
+.addWallet > div > button:hover {
+  background-color: rgb(112, 101, 156);
+  color: white;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.moneyBox-container > span:hover {
+  background-color: rgb(112, 101, 156);
+  color: white;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.moneyimg {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+}
+
+.moneyimg > span {
+  display: flex;
+  padding: 40px;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.178);
+  border-radius: 15px;
+  width: fit-content;
+  background-color: rgba(220, 220, 220, 0.514);
+}
+
+.profileimg > span > img {
+  width: 120px;
+}
+
+.cancel-sign {
+  width: 20px;
+  cursor: pointer;
+}
+
+.billBtn {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  max-height: 84px;
+  padding: 30px;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.178);
+  border-radius: 10px;
+  color: black;
+  font-weight: 600;
+  background-color: white;
+}
+
+table.tables {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background-color: white;
+
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+th,
+td {
+  padding: 12px 15px;
+  text-align: center;
+}
+
+thead {
+  background-color: #271870be;
+  color: white;
+  text-align: center;
+}
+
+tbody tr:nth-child(2n) {
+  background-color: rgba(117, 116, 116, 0.315);
+}
+
+tr > td:nth-child(7) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 66px;
+  width: 161px;
+}
+tr > td:nth-child(7) > p {
+  height: 100%;
+  white-space: nowrap;
+  line-height: 40px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+}
+
+.tables tbody tr:hover {
+  background-color: rgba(74, 144, 226, 0.1);
+}
+
+.approve-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 10px;
+  background-color: rgba(122, 202, 122, 0.973);
+  gap: 5px;
+  padding: 10px;
+  font-weight: 600;
+  transition: 0.3s ease;
+  border: 1px transparent;
+  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.233);
+}
+
+.approve-btn > img {
+  width: 20px;
+}
+
+.approve-btn:hover {
+  background-color: rgba(122, 202, 122, 0.534);
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.business-info{
+      position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  height: fit-content;
+  z-index: 1002;
+  padding: 30px 25px;
+  border-radius: 15px;
+  width: 60%;
+  background-color: rgb(255, 255, 255);
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.356);
+
+}
+
+.business-info>h2{
+    padding: 13px 0px;
+}
+
+.business-info>b{
+  cursor: pointer;
+    position: absolute;
+    right: 2%;
+    top:4%;
+    width: 10px;
+    font-size: 20px;
+}
+
+.supplierReq-container {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  height: fit-content;
+  z-index: 1001;
+  padding: 30px 25px;
+  border-radius: 15px;
+  gap: 20px;
+  width: 90%;
+  background-color: rgb(233, 233, 233);
+}
+
+.billBtn:hover {
+  background-color: rgb(112, 101, 156);
+  color: white;
+  cursor: pointer;
+}
+
+.Request-alert {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+
+.Request-alert > img {
+  width: 25px;
+}
+
+@media only screen and (max-width: 1023px) {
+  .logOutbtn {
+    padding: 10px;
+    font-size: 10px;
+    right: 12px;
+    top: 12px;
+  }
+  .askFor-container {
+    width: 60%;
+  }
+  .profileInfo {
+    width: 80%;
+  }
+
+  .moneyBox-container {
+    width: 70%;
+  }
+  .profileInfo > p > img {
+    width: 15px;
+  }
+
+  .profileInfo-container {
     display: flex;
-    justify-content: center;
-    margin: auto;
-    padding: 3% 10%;    
-    flex-shrink: 0;
-    border-radius: 16px;
-background: #261870;
+    flex-direction: column;
+    align-items: center;
+  }
+  .Billing-info {
+    width: 80%;
+  }
+}
+
+@media only screen and (max-width: 668px) {
+  .moneyBox-container {
+    width: 80%;
+    padding: 30px 20px;
+  }
+
+  .addWallet > input {
+    text-indent: 10px;
+    font-size: 12px;
+  }
+
+  .addWallet {
+    padding-left: 15px;
+  }
+
+  .addWallet > div > img {
+    width: 25px;
+    height: 25px;
+  }
+
+  .addWallet > div > button {
+    padding: 20px 10px;
+    font-size: 11px;
+  }
+  .moneyBox-container > span {
+    padding: 20px;
+  }
+  .moneyimg > span {
+    padding: 30px;
+  }
+  .moneyimg > span > img {
+    width: 50px;
+  }
+
+  .askFor-container > h1 {
+    font-size: 20px;
+  }
+  .askFor-container > div > span {
+    font-size: 14px;
+  }
+  .askFor-container {
+    width: 90%;
+  }
+  .askFor-container > div > input {
+    height: 50px;
+    font-size: 12px;
+  }
+
+  .askFor-container > div > textarea {
+    height: 125px;
+    font-size: 12px;
+  }
+
+  .profileInfo-container {
+    padding-top: 100px;
+  }
+
+  .profileInfo {
+    width: 80%;
+    padding: 30px 15px;
+  }
+
+  .profileimg {
+    padding: 10px;
+  }
+
+  .profileimg > span > img {
+    width: 80px;
+  }
+
+  .profileInfo > span {
+    font-size: 11px;
+    padding: 20px;
+  }
+  .askMoney > span {
+    padding: 20px 5px;
+    font-size: 10px;
+    text-align: center;
+    width: 47%;
+    background-color: white;
+  }
+
+  .profileInfo > a {
+    font-size: 11px;
+    padding: 20px;
+  }
+
+  .profileInfo > p {
+    font-size: 11px;
+  }
 }

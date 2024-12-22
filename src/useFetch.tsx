@@ -8,9 +8,10 @@ const useFetch = <T,>(url: RequestInfo, Option: RequestInit) => {
     setTimeout(() => {
       fetch(url, Option) 
         .then((response) => {
-          if (!response.ok)
+          if (!response.ok){
+             setIsPending(false);
             throw Error("could not Fetch the data for that fetch");
-
+}
           return response.json();
         })
 

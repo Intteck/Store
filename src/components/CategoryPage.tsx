@@ -20,9 +20,12 @@ type CustomerDetails = {
   email: string;
   phone_number: string;
   address: string;
+  postalCode: string;
   country: string;
   state: string;
   city: string;
+  wallet_amt: number;
+  wishlist: string[];
 };
 
 
@@ -33,6 +36,7 @@ type ProductItem = {
   image_URL: string;
   product_Type: productType[];
   price: number;
+  suppliers: [];
 };
 
 type productType = {
@@ -63,7 +67,7 @@ const displayImg = [''];
  if (category === undefined) {
     return (
       <>
-        <Nav data={[customerDetails]} />
+        <Nav data={[customerDetails,Products]} />
         <div className="content">
           <div className="mobile-categorypage-list">
             {categoriesNames.map((item, index) => (
@@ -107,7 +111,7 @@ const displayImg = [''];
 
   return (
     <>
-      <Nav data={[customerDetails]} />
+      <Nav data={[customerDetails, Products]} />
       <div className="content">
         <div className="all-products-list">
           <div className="mobile-section-container">
@@ -138,14 +142,8 @@ const displayImg = [''];
                       />
                     </div>
                     <div className="product-details">
-                      <h4 className="mobile">{item.name.slice(0, 15)}...</h4>
-                      <h4 className="pc">{item.name.slice(0, 25)}...</h4>
-                      <span className="mobile">
-                        {item.description.slice(0, 23)}...
-                      </span>
-                      <span className="pc">
-                        {item.description.slice(0, 40)}...
-                      </span>
+                      <h4>{item.name}</h4>
+                      <span>{item.description}</span>
                       <b>&#8358;{formatter.format(Number(item.price))}</b>
                     </div>
                   </Link>
@@ -158,7 +156,7 @@ const displayImg = [''];
                 onClick={() => {
                   setPage(section - 1);
                   setSection(section - 1);
-                       window.scrollTo(0, 0);
+                  window.scrollTo(0, 0);
                 }}
               >
                 Previous
@@ -167,7 +165,7 @@ const displayImg = [''];
                 className={page === section ? "active" : ""}
                 onClick={() => {
                   setPage(section);
-                       window.scrollTo(0, 0);
+                  window.scrollTo(0, 0);
                 }}
               >
                 {section}
@@ -182,7 +180,7 @@ const displayImg = [''];
                 }}
                 onClick={() => {
                   setPage(section + 1);
-                       window.scrollTo(0, 0);
+                  window.scrollTo(0, 0);
                 }}
               >
                 {section + 1}
@@ -191,13 +189,13 @@ const displayImg = [''];
                 className={page === section + 2 ? "active" : ""}
                 style={{
                   display:
-                    section === Math.floor(filteredProducts.length / 20)
+                    section + 2 > Math.ceil(filteredProducts.length / 20)
                       ? "none"
                       : "inline",
                 }}
                 onClick={() => {
                   setPage(section + 2);
-                       window.scrollTo(0, 0);
+                  window.scrollTo(0, 0);
                 }}
               >
                 {section + 2}
@@ -212,7 +210,7 @@ const displayImg = [''];
                 onClick={() => {
                   setPage(section + 1);
                   setSection(section + 1);
-                       window.scrollTo(0, 0);
+                  window.scrollTo(0, 0);
                   console.log(Products.length / 20);
                 }}
               >

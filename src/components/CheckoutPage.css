@@ -56,9 +56,10 @@ gap: 10px;
         transition: 0.4s ease;
         padding: 10px;
         width: 25%;
+        background-color: white;
 }
 .Billing-info.active{
-height: 1550px;
+height: 1520px;
 transition: 1.5s ease;
 }
 .Billing-info>h2{

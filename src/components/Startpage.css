@@ -19,6 +19,10 @@
 height: 65vh;
 }
 
+.startPage>div>img{
+  width: 200px;
+}
+
 .startText{
     width: 68%;
     text-align: center;
