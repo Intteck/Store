@@ -169,7 +169,7 @@ useEffect(() => {
                           <img
                             key={index}
                             src={
-                              "https://pretiosusadmin.gibsonline.com/Product_Images/" +
+                              "https://pretiosusapi.gibsonline.com/uploads/" +
                               item.image_URL
                             }
                             alt={item.name}
@@ -217,7 +217,7 @@ useEffect(() => {
                   <div className="image-holder">
                     <img
                       src={
-                        "https://pretiosusadmin.gibsonline.com/Product_Images/" +
+                        "https://pretiosusapi.gibsonline.com/uploads/" +
                         item.image_URL
                       }
                       alt={item.name}

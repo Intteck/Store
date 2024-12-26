@@ -1,0 +1,119 @@
+/* Main layout */
+.admin-seller-applications {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f5f7fa; /* Light background for contrast */
+    color: #333; /* Darker text for readability */
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Page container */
+  .admin-seller-applications-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  /* Table styling */
+  .admin-seller-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .admin-seller-table th,
+  .admin-seller-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd; /* Light border between rows */
+  }
+  
+  .admin-seller-table th {
+    background-color: #007bff; /* Blue background for header */
+    color: white;
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  
+  .admin-seller-table td {
+    background-color: white;
+    color: #555;
+    font-size: 14px;
+  }
+  
+  .admin-seller-table td:hover {
+    background-color: #f1f8ff; /* Light blue background on hover */
+  }
+  
+  /* Table cell styles for Business Details */
+  .admin-seller-table td[title] {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  
+  .admin-seller-table td[title]:hover {
+    background-color: #f1f8ff;
+    cursor: pointer;
+  }
+  
+  /* Button styling */
+  .admin-approve-button {
+    background-color: #28a745; /* Green button */
+    color: white;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  .admin-approve-button:hover {
+    background-color: #218838; /* Darker green on hover */
+    transform: translateY(-2px);
+  }
+  
+  .admin-approve-button:active {
+    transform: translateY(0);
+  }
+  
+  /* Header styling */
+  .admin-header {
+    color: #007bff;
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  /* Loader and error message */
+  .admin-message {
+    text-align: center;
+    font-size: 1.2rem;
+  }
+  
+  /* Error message */
+  .admin-error-message {
+    color: #e74c3c; /* Red color for errors */
+    font-weight: bold;
+  }
+  
+  /* Responsive design */
+  @media (max-width: 768px) {
+    .admin-seller-table,
+    .admin-seller-table th,
+    .admin-seller-table td {
+      font-size: 12px;
+    }
+  
+    .admin-seller-table th,
+    .admin-seller-table td {
+      padding: 8px;
+    }
+  
+    .admin-approve-button {
+      padding: 6px 12px;
+    }
+  }
+  

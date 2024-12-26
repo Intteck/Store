@@ -19,7 +19,9 @@ import Cookies from "js-cookie";
 import Wishlist from "./components/Wishlish";
 import Recovery from "./components/Recovery";
 import Membership from "./components/Membership";
-
+import AdminSellerApplications from "./components/AdminSellerApplications";
+import ProductUpload from "./components/ProductUpload";
+import ProductRequests from "./components/ProductRequests";
 
 type ProductItem = {
   id: number;
@@ -165,11 +167,20 @@ function App() {
              path="/Contact"
              element={<Contact data={[customerDetails, Products]} />}
            />
+           
            <Route
-             path="/Contact"
-             element={<Contact data={[customerDetails, Products]} />}
+             path="/AdminSellerApplications"
+             element={<AdminSellerApplications  />}
            />
-
+            <Route
+             path="/ProductUpload"
+             element={<ProductUpload  />}
+           />
+           
+           <Route
+             path="/ProductRequests"
+             element={<ProductRequests  />}
+           />
            <Route
              path="/Membership"
              element={<Membership data={[customerDetails, Products]} />}
