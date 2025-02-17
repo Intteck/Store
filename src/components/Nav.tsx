@@ -47,6 +47,11 @@ type CustomerDetails = {
 
 const Nav = (props:navProps) => {
         const { data } = props;
+      const [role, setRole] = useState("");
+         useEffect(()=>{
+      if(Cookies.get("customerRole") !== undefined)
+      setRole(JSON.parse(Cookies.get("customerRole")!));
+         },[])
         const [customerDetails,Products] = data;
           const [page, setPage] = useState(1);
             const [section, setSection] = useState(1);
@@ -149,7 +154,6 @@ const [searchActive,setSearchActive] = useState(false);
                 {customerDetails.email ? (
                   <Link to={"/profile"}>
                     <img src="\src\assets\mdi_account-outline.png" alt="" />
-                    Hi, {customerDetails.first_name}
                   </Link>
                 ) : (
                   <Link to={"/Account"}>
@@ -177,11 +181,15 @@ const [searchActive,setSearchActive] = useState(false);
                   ) : (
                     ""
                   )}
+                  &nbsp;{role}
                 </Link>
                 <span className="wallet-icon">
                   {" "}
                   <img src="\src\assets\wallet_24dp_261870_FILL0_wght400_GRAD0_opsz24.png" />
-               <b>&nbsp;: &#8358;{formatter.format(customerDetails.wallet_amt)}</b>
+                  <b>
+                    &nbsp;: &#8358;
+                    {formatter.format(customerDetails.wallet_amt)}
+                  </b>
                 </span>
               </div>
               <div
@@ -238,12 +246,8 @@ const [searchActive,setSearchActive] = useState(false);
                             />
                           </div>
                           <div className="product-details">
-                            <h4>
-                              {item.name}
-                            </h4>
-                            <span>
-                              {item.description}
-                            </span>
+                            <h4>{item.name}</h4>
+                            <span>{item.description}</span>
                             <b>&#8358;{formatter.format(Number(item.price))}</b>
                           </div>
                         </Link>

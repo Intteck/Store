@@ -12,10 +12,17 @@ interface homeProps {
   data: [
         customerDetails: CustomerDetails,
     Products: ProductItem[] | null,
-    categoriesNames: CategoryKey[],
+    categoriesNames:  Categories[] | null,
     isPending: boolean,
   ]
 };
+
+
+type Categories = {
+  categoryId: number;
+  categoryName: string;
+  description: string;
+}
 
 type ProductItem = {
   id: number;
@@ -50,20 +57,19 @@ type productType = {
   description: string;
 };
 
-type CategoryKey ="Refrigerators" | "Freezers" | "Air Conditioners" | "Washing Machines" | "Microwaves Oven" |"Small Home Appliances" |"Phones" |"Accessories"| "Laptops" | "Tvs" ;
 
 const HomePage = (props: homeProps) => {
   const formatter = new Intl.NumberFormat("en-US");
 const {data} = props;
 const [customerDetails, Products, categoriesNames, isPending] = data;
   var random = 0;
-
+useEffect(() => {
                   if (Products) {
                     random = Math.floor(
                       Math.random() * (Products!.length - 4) 
                     );
                   }
-
+                },[Products])
   const [alertSlide, setSlide] = useState(1);
 useEffect(() => {
   const interval = setInterval(() => {
@@ -148,38 +154,38 @@ useEffect(() => {
                 <span className="dot"></span>
               </div>
             )}
-            {Products &&
-              categoriesNames.slice(0, 4).map((category, index) => (
+         {Products && categoriesNames &&
+              categoriesNames?.slice(0, 4).map((category, index) => (
                 <Link
-                  to={`/categories/${category}`}
-                  key={category}
+                  to={`/categories/${category.categoryName}`}
+                  key={category.categoryName}
                   className="mobile-categories-card"
                   data-aos="fade-up"
                   data-aos-duration="1000"
                   data-aos-delay={50 * index}
                 >
                   <div>
-                    {Products &&
-                      Products!
+                    {Products &&  categoriesNames &&
+                      Products
                         .filter((item) => {
-                          return item.product_Type[0].name == category;
+                          return item.product_Type[0].name == category.categoryName;
                         })
                         .slice(0, 4)
                         .map((item, index) => (
                           <img
                             key={index}
                             src={
-                              "https://pretiosusapi.gibsonline.com/uploads/" +
+                              "https://pretiosusadmin.gibsonline.com/Product_Images/" +
                               item.image_URL
                             }
                             alt={item.name}
                           />
                         ))}
                   </div>
-                  <span>{category}</span>
+                  <span>{category.categoryName}</span>
                 </Link>
               ))}
-            {Products && (
+              {Products && (
               <Link to={"/Search"} className="seeAllBtn pc">
                 See All
               </Link>
@@ -217,7 +223,7 @@ useEffect(() => {
                   <div className="image-holder">
                     <img
                       src={
-                        "https://pretiosusapi.gibsonline.com/uploads/" +
+                        "https://pretiosusadmin.gibsonline.com/Product_Images/" +
                         item.image_URL
                       }
                       alt={item.name}

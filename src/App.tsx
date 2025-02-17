@@ -49,6 +49,11 @@ type CustomerDetails = {
   wishlist: string[];
 };
 
+type Categories = {
+  categoryId: number;
+  categoryName: string;
+  description: string;
+}
  
 type productType = {
   id: number;
@@ -61,7 +66,6 @@ type productType = {
   };
 
 
-type CategoryKey ="Refrigerators" | "Freezers" | "Air Conditioners" | "Washing Machines" | "Microwaves Oven" |"Small Home Appliances" |"Phones" |"Accessories"| "Laptops" | "Tvs" ;
  
 function App() {
    const location = useLocation();
@@ -100,6 +104,20 @@ function App() {
    },[])
 
   const {
+    data: categoriesNames,
+  } = useFetch<Categories[]>(
+    "https://pretiosusapi.gibsonline.com/api/Categories",
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+
+
+
+  const {
     data: Products,
     isPending,
     //setData: setProduct,
@@ -113,18 +131,6 @@ function App() {
   
 
 
- const categoriesNames: CategoryKey[] = [
-   "Refrigerators",
-   "Freezers",
-   "Air Conditioners",
-   "Washing Machines",
-   "Microwaves Oven",
-   "Small Home Appliances",
-   "Phones",
-   "Accessories",
-   "Laptops",
-   "Tvs"
- ];
 
 
  return (
@@ -139,7 +145,7 @@ function App() {
              path="/Login"
              element={
                <Login
-                 data={[setCustomerDetails,setRole, setInCheckout, inCheckout]}
+                 data={[setCustomerDetails, setRole, setInCheckout, inCheckout]}
                />
              }
            />
@@ -167,20 +173,19 @@ function App() {
              path="/Contact"
              element={<Contact data={[customerDetails, Products]} />}
            />
-           
+
            <Route
              path="/AdminSellerApplications"
-             element={<AdminSellerApplications  />}
+             element={<AdminSellerApplications />}
            />
-            <Route
-             path="/ProductUpload"
-             element={<ProductUpload  />}
-           />
-           
            <Route
-             path="/ProductRequests"
-             element={<ProductRequests  />}
+             path="/ProductUpload"
+             element={
+               <ProductUpload data={[customerDetails, Products, isPending]} />
+             }
            />
+
+           <Route path="/ProductRequests" element={<ProductRequests />} />
            <Route
              path="/Membership"
              element={<Membership data={[customerDetails, Products]} />}

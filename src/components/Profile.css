@@ -233,6 +233,8 @@
   transition: 0.3s ease;
 }
 
+
+
 .profileimg {
   display: flex;
   flex-direction: column;
@@ -244,7 +246,13 @@
 text-align: center;
 }
 
-.profileInfo > p {
+.cash-cove{
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.cash-cove > p {
   display: flex;
   align-items: center;
   gap: 5px;
@@ -255,12 +263,31 @@ text-align: center;
   box-shadow: 0px 5px 5px rgb(255, 255, 255);
 }
 
-.profileInfo > p > img {
+.cash-cove > p > img {
   width: 20px;
 }
-.profileInfo > p > b {
+.cash-cove > p > b {
   color: black;
 }
+
+.cash-cove > a {
+  padding: 20px;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.178);
+  border-radius: 10px;
+  color: black;
+  font-weight: 600;
+  background-color: white;
+  transition: 0.3s ease;
+}
+
+
+.cash-cove > a:hover {
+  background-color: rgb(112, 101, 156);
+  color: white;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
 
 .moneyBox-container > span {
   padding: 30px;

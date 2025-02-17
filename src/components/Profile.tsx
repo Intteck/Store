@@ -5,7 +5,6 @@ import PaystackPop from "@paystack/inline-js";
 import Nav from "./Nav";
 import "./Profile.css"
 import Cookies from "js-cookie";
-import { spawn } from "child_process";
  interface Props {
    data: [customerDetails: CustomerDetails, Products: ProductItem[] | null,    
    setCustomerDetails: React.Dispatch<React.SetStateAction<CustomerDetails>>,
@@ -67,6 +66,7 @@ const Profile = (props: Props) => {
   const[addWalletActive, setAddWalletActive] = useState(false);
     const [addToWallet, setAddToWallet] = useState(false);
     const [reqPend, setReqPend] = useState(false);
+    const [appPend, setAppPend] = useState(0);
     const [successReq, setSuccessReq] = useState(false);
     const [billActive, setBillActive] = useState(false);
       const [billVisible, setBillVisible] = useState(false);
@@ -127,6 +127,7 @@ console.log("Oh hello there"+role);
 }
 
 const handleApprove = (id: number) =>{
+  setAppPend(id)
       fetch("https://pretiosusapi.gibsonline.com/api/Supplier/applications/"+id, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -135,17 +136,21 @@ const handleApprove = (id: number) =>{
         .then((response) => {
           if (!response.ok) {
             return response.json().then((error) => {
+                  setAppPend(0)
+
               throw new Error(`Failed to send details. ${error.message}`);
             });
           }
        return response.json();
         }).then((data) => {
-          setSupplierApps(data);
           console.log("Data has been sent", data);
+              setAppPend(0);
+
         })
         .catch((error) => {
           console.error("Error sending info:", error);
-          setReqPend(false);
+            setAppPend(0)
+
         });
 }
 
@@ -480,18 +485,32 @@ setReqPend(false);
                 <span>
                   <img src="/src/assets/default_pfp.png" alt="" />
                 </span>
-                <h2>Hello, {customerDetails.first_name}<br/>
-                {role === "admin" && <>{`{Admin}`}</>}
+                <h2>
+                  Hello, {customerDetails.first_name}
+                  <br />
+                  {role === "admin" && <>{`{Admin}`}</>}
                 </h2>
               </div>
-              <p>
-                <img src="\src\assets\wallet_24dp_261870_FILL0_wght400_GRAD0_opsz24.png" />
-                Preak Mart store Cash Cove balance:{" "}
-                <b>&#8358;{formatter.format(customerDetails.wallet_amt)}</b>
-              </p>
-              {role == "admin" && <span onClick={()=>{                  
-                getSuppliers()
-setVenReqActive(!venReqActive)}}>Vendor Requests</span>}
+              <div className="cash-cove">
+                <p>
+                  <img src="\src\assets\wallet_24dp_261870_FILL0_wght400_GRAD0_opsz24.png" />
+                  Preak Mart store Cash Cove balance:{" "}
+                  <b>&#8358;{formatter.format(customerDetails.wallet_amt)}</b>
+                </p>
+                <Link to={"/wishlist"}>
+                  <span>Your Wishlist</span>
+                </Link>
+              </div>
+              {role == "admin" && (
+                <span
+                  onClick={() => {
+                    getSuppliers();
+                    setVenReqActive(!venReqActive);
+                  }}
+                >
+                  Vendor Requests
+                </span>
+              )}
               <span
                 onClick={() => {
                   setBillActive(true);
@@ -499,14 +518,14 @@ setVenReqActive(!venReqActive)}}>Vendor Requests</span>}
               >
                 Address Book
               </span>
-              <Link to={"/wishlist"}>
-                <span>Your Wishlist</span>
-              </Link>
               <Link to={"/Orders"}>
                 <span>Your Orders</span>
               </Link>
-              <Link to={"/Membership"}>
+              {role != "seller" && <Link to={"/Membership"}>
                 <span>Become a vendor</span>
+              </Link>}
+              <Link to={"/ProductUpload"}>
+                <span>Add a Product</span>
               </Link>
               <div className="askMoney">
                 <span
@@ -525,73 +544,120 @@ setVenReqActive(!venReqActive)}}>Vendor Requests</span>}
                 </span>
               </div>
             </div>
-            {venReqActive && (<>
-                      <div
+            {venReqActive && (
+              <>
+                <div
                   className="blur"
                   onClick={() => {
                     setVenReqActive(!venReqActive);
                   }}
                 ></div>
-<div className="supplierReq-container">
-                      {supplierApps == "" && <div className="loading-screen">
-                        <div className="loader"></div>
-                      </div>}
-                      {supplierApps != "" && supplierApps.map((app: any,)=>(<>
-          <table className="tables">
-            <thead>
-              <tr>
-                <th>Id</th>
-                <th>User Id</th>
-                  <th>Name</th>
-                <th>Contacts</th>
-                <th>Email</th>  
-                <th>Status</th>
-                <th>Business Details</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-                <tr
-                  key={app.id}
-                >
-                  <td>{app.id}</td>
-               <td>{app.userId}</td>              
-               <td>{app.supplierName}</td>
-               <td>{app.supplierPrimaryContact} , {app.supplierSecondaryContact}</td>
-               <td>{app.supplierEmail}</td>
-               <td>{app.status}</td>
-               <td onClick={()=>{setReqDetActive(app.id)}}><p>{app.businessDetails}</p></td>
-               <td>
-                    <button onClick={()=>{handleApprove(app.id)}}
-                          className="approve-btn"
-                        >
-                          Approve <img src="\src\assets\check_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png"></img>
-                        </button></td>
-                   
-                </tr>
-            </tbody>
-          </table>
-           {reqDetActive !== 0 && (<>
-                      <div
-                  className="blur"
-                  onClick={() => {
-                    setReqDetActive(0);
-                  }}
-                ></div>
-          {reqDetActive === app.id && <div className="business-info"><b  
-          onClick={() => {
-                    setReqDetActive(0);
-                  }}>X</b>
-          <span><b>Name:</b> {app.supplierName}</span>
-          <span><b>Email:</b> {app.supplierEmail}</span>
-          <span><b>No:</b> {app.supplierPrimaryContact} , {app.supplierSecondaryContact}</span>
-          <h2>Business Description</h2>
-          <p>{app.businessDetails}</p></div>}</>)}
-
-                      </>))}
-
-</div>
-            </>)}
+                <div className="supplierReq-container">
+                  {supplierApps == "" && (
+                    <div className="loading-screen">
+                      <div className="loader"></div>
+                    </div>
+                  )}
+                  {supplierApps != "" &&
+                    supplierApps.map((app: any) => (
+                      <>
+                        <table className="tables">
+                          <thead>
+                            <tr>
+                              <th>Id</th>
+                              <th>User Id</th>
+                              <th>Name</th>
+                              <th>Contacts</th>
+                              <th>Email</th>
+                              <th>Status</th>
+                              <th>Business Details</th>
+                              <th>Actions</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr key={app.id}>
+                              <td>{app.id}</td>
+                              <td>{app.userId}</td>
+                              <td>{app.supplierName}</td>
+                              <td>
+                                {app.supplierPrimaryContact} ,{" "}
+                                {app.supplierSecondaryContact}
+                              </td>
+                              <td>{app.supplierEmail}</td>
+                              <td>{app.status}</td>
+                              <td>
+                                <p
+                                  onClick={() => {
+                                    setReqDetActive(app.id);
+                                  }}
+                                >
+                                  {app.businessDetails}
+                                </p>
+                              </td>
+                              <td>
+                                {app.status != "Approved" ? (
+                                  appPend != app.id ? (
+                                    <button
+                                      onClick={() => {
+                                        handleApprove(app.id);
+                                      }}
+                                      className="approve-btn"
+                                    >
+                                      Approve{" "}
+                                      <img src="\src\assets\check_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png"></img>
+                                    </button>
+                                  ) : (
+                                    <div className="loading-screen">
+                                      <div className="loader"></div>
+                                    </div>
+                                  )
+                                ) : (
+                                  <span style={{ color: "green" }}>
+                                    Approved
+                                  </span>
+                                )}
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        {reqDetActive !== 0 && (
+                          <>
+                            <div
+                              className="blur"
+                              onClick={() => {
+                                setReqDetActive(0);
+                              }}
+                            ></div>
+                            {reqDetActive === app.id && (
+                              <div className="business-info">
+                                <b
+                                  onClick={() => {
+                                    setReqDetActive(0);
+                                  }}
+                                >
+                                  X
+                                </b>
+                                <span>
+                                  <b>Name:</b> {app.supplierName}
+                                </span>
+                                <span>
+                                  <b>Email:</b> {app.supplierEmail}
+                                </span>
+                                <span>
+                                  <b>No:</b> {app.supplierPrimaryContact} ,{" "}
+                                  {app.supplierSecondaryContact}
+                                </span>
+                                <h2>Business Description</h2>
+                                <p>{app.businessDetails}</p>
+                              </div>
+                            )}
+                          </>
+                        )}
+                      </>
+                    ))}
+                </div>
+              </>
+            )}
             {addWalletActive && (
               <>
                 <div

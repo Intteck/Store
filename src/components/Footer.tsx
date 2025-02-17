@@ -25,6 +25,11 @@ type CustomerDetails = {
 
 const Footer = (props:footerProps) => {
     const [cartNo, setCartNo] = useState();
+          const [role, setRole] = useState("");
+           useEffect(() => {
+             if (Cookies.get("customerRole") !== undefined)
+               setRole(JSON.parse(Cookies.get("customerRole")!));
+           }, []);
       const { data } = props;
   const [customerDetails] = data;
 
@@ -262,6 +267,7 @@ const Footer = (props:footerProps) => {
                   </clipPath>
                 </defs>
               </svg>
+              <span>{role}</span>
               </Link>
             ) : (
               <Link

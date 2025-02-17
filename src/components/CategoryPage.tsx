@@ -7,10 +7,16 @@ interface shopProps {
   data: [
     customerDetails: CustomerDetails,
     Products: ProductItem[] | null,
-    categoriesNames: CategoryKey[],
+    categoriesNames:  Categories[] | null,
     isPending: boolean
   ];
 }
+type Categories = {
+  categoryId: number;
+  categoryName: string;
+  description: string;
+}
+
 
 type CustomerDetails = {
   id: number;
@@ -45,7 +51,6 @@ type productType = {
   description: string;
 };
 
-type CategoryKey ="Tvs" | "Refrigerators" | "Freezers" | "Air Conditioners" | "Washing Machines" | "Microwaves Oven" |"Small Home Appliances" |"Phones" |"Accessories"| "Laptops";
 
 
 const CategoryPage = (props: shopProps) => {
@@ -56,12 +61,9 @@ const [customerDetails, Products, categoriesNames, isPending] = data;
     const [page, setPage] = useState(1);
     const [section, setSection] = useState(1);
 const formatter = new Intl.NumberFormat("en-US");
-
-  console.log(category);
   
-  const categoryKey = category as CategoryKey;
 const filteredProducts = Products && Products!.filter((item) => {
-  return item.product_Type[0].name.trim() === categoryKey;
+  return item.product_Type[0].name.trim() === category;
 });
 const displayImg = [''];
  if (category === undefined) {
@@ -70,13 +72,14 @@ const displayImg = [''];
         <Nav data={[customerDetails,Products]} />
         <div className="content">
           <div className="mobile-categorypage-list">
-            {categoriesNames.map((item, index) => (
+            {categoriesNames && categoriesNames?.map((item, index) => (
               <Link
-                to={`/categories/${item}`}
+                to={`/categories/${item.categoryName}`}
                 className="mobile-categorypage-item"
+                key={index}
               >
                 <div>
-                  <img src={displayImg[index]} alt="" /> {item}
+                  <img src={displayImg[index]} alt="" /> {item.categoryName}
                 </div>
                 <img
                   src="src/assets/Icon Arrow.png"
